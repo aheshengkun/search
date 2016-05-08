@@ -1,0 +1,139 @@
+<include file="Public/mainhead" />
+
+<script type="text/javascript">
+  // function mdyDialog(url){
+	 //  tipsWindown(
+	 //    "添加代金券",
+		// "url:get?"+url,
+		// 450,
+		// 224,
+		// "true","","true",""
+	 //  );
+	 //  return false;
+  // }
+  function SetStatus(name,id){
+	$.post("__URL__/SetStatus",'name='+name,function(status){
+		if(status == 'cg'){
+			$("#Myobj_"+id).html('<font color="#FF0000">已发放</font>');
+			alert("设置成功,请复制后发放此代金券: "+name);
+		}
+	});
+	  
+  }
+  
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+			<tr>
+				<td height="31">
+				<div class="titlebt">内容管理</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <div style="float:left;">
+                      <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Vouchers/index')}" style="margin-bottom:2px;" autocomplete="off">
+                        代金券代码：
+                        <input type="text" name="name" id="name" value="{$search.name}"/>
+                        代金券价格：
+                        <input type="text" name="money" id="money" value="{$search.money}"/>
+                        使用者名字：
+                        <input type="text" name="username" id="username" value="{$search.username}"/>
+                        状态
+                        <select name="status">
+                          <option value="" >请选择</option>
+                          <option value="3" >已发放</option>
+                          <option value="1" >未使用</option>
+                          <option value="2" >已使用</option>
+                        </select>
+                        <input type="button" value="搜索" class="btn"  onclick="javascript:search.submit();" />
+                      </form>
+                    </div>
+                    <div  style="float:right;">
+                      <input type="button" value="添加代金券" class="btn" onClick="javascript:window.location.href='{:U(MODULE_NAME.'/Vouchers/Add')}'"/>
+                    </div>
+
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+                        <tr class="tr_title">
+                          <td width="5%">ID</td>
+                          <td width="15%">代金券代码</td>
+                          <td width="10%">代金券价格</td>
+                          <td width="5%">状态</td>
+                          <td width="10%">有效期</td>
+                          <td width="10%">使用者</td>
+                          <td width="15%">使用时间</td>
+                          <td width="10%">添加者</td>
+                          <td width="15%">添加时间</td>
+                          <td width="5%">操作</td>
+                          
+                          
+                        </tr>
+                        <Volist name="list" id="item">
+                        <tr class="tr_content">
+                            <td align="center">{$item.id}</td>
+                            <td align="center">{$item.name}</td>
+                            <td align="center" >{$item.money}</td>
+                            <switch name="item.status">
+                                <case value="3"><td align="center"><font color="#FF0000">已发放</font></td></case>
+                                <case value="1">
+                                  <td align="center" id="Myobj_{$item.id}">
+                                    <a href="javascript:void(0);" onClick="javascript:SetStatus('{$item.name}','{$item.id}');">未使用</a>
+                                  </td>
+                                </case>
+                                <case value="2"><td align="center"><font color="#009933">已使用</font></td></case>
+                                <default />default
+                            </switch>
+                            <td align="center">{$item.valid|date='Y-m-d',###}</td>
+                            <td align="center">{$item.username}</td>
+                            <td align="center">{$item.usetime|default=''|date='Y-m-d H:i:s',###}</td>
+                            <td align="center">{$item.adminname}</td>
+                            <td align="center">{$item.addtime|date='Y-m-d H:i:s',###}</td>
+                            <td class="main_td1" align="center" >
+                              <a href="javascript:void(0);" onClick="javascript:if(confirm('确定要删除吗?删除后将不可恢复')) location.href='{:U(MODULE_NAME."/Vouchers/Del?id=$item[id]")}'">删除</a>
+                            </td>
+                        </tr>
+                        </Volist>
+                        
+                    </table>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			<tr>
+				<!--<td height="20"><a href="__URL__/index?xls=down&{$down}" class="downxls"></a></td>-->
+			</tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+                <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}
+                </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

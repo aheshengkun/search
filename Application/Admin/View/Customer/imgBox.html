@@ -1,0 +1,55 @@
+<include file="Public/windowhead" />
+
+<script type="text/javascript" src="__PUBLIC__/admin/js/jquery.imgrole.js"></script>
+<script type="text/javascript">
+	$(window).load(function(){
+		var roleimg = $('#roleimg');
+		var imgwidth = roleimg.width();
+		var imgheight = roleimg.height();
+		
+		if(imgwidth > 440){
+			roleimg.attr("width","440");
+		}
+	});
+	
+
+	//图片左翻转
+  	function leftRole(){
+		var img = $('#roleimg');
+		img.rotate(-90);
+	}
+	//图片右翻转
+  	function rightRole(){
+		var img = $('#roleimg');
+		img.rotate(90);
+	}
+</script>
+
+<style type="text/css">
+	#roleimg{
+		display: inline-block;float: left\0;margin-left:30px\0;margin-bottom:25px\0;
+	}
+	.abtn{
+		display:inline-block;margin:10px;padding:5px 10px;height:25px;line-height:25px;text-align:center;color:#fff;background:#ccc;border:1px solid #B6BEC5;border-radius:4px;
+	}
+
+	/*.leftrole{
+		float:left;position: relative;left: 0px;bottom:0;
+	}
+	.rightrole{
+		float:right;position: relative;right: 0px;bottom:0;
+	}*/
+</style>
+	<div style="height:5px;clear:both;"></div>
+	<div style="text-align:center;padding-bottom:10px;_padding-bottom:0;">
+		<center>
+			<a href="javascript:leftRole();" class="abtn leftrole"> 左翻转 </a>
+			<a href="javascript:rightRole();" class="abtn rightrole"> 右翻转 </a>
+			<div style="height:0px;clear:both;"></div>
+			<img alt="" id="roleimg" src="/{$cardpic}" />
+			<div style="height:0px;clear:both;"></div>
+		</center>
+	</div>
+	<div style="height:5px;clear:both;"></div>
+
+<include file="Public/commonfoot" />

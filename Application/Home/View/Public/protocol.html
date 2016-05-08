@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBliC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>借款协议书 - {$webname}</title>
+
+  <link rel="stylesheet" href="__PUBLIC__/Css/home/guangfacaifu/common.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/home/guangfacaifu/style.css">
+  <link href="__PUBLIC__/Css/home/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/SuperSlide.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/commont.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/switch.js"></script>
+
+</head>
+
+<body>
+  <!--top、head、nav--> 
+  <include file="Public:head"/>
+  <!--head结束-->
+
+<div class="main"> 
+  <!--借款协议书-->
+  <div class="notice_center">
+  <!--借款协议书-->
+  <h1 class="protocol">借款协议书</h1>
+  <div class="protocol_info">
+    <ul>
+      <li>借款协议号：{$XyInfo.addtime}</li>
+      <li>借款人：{$usernames}</li>
+      <li>出借人：详见本协议第一条</li>
+      <li>日期：{$XyInfo.repayment_time|date='Y-m-d',###}</li>
+    </ul>
+  </div>
+  <div class="protocol_con">
+    <h1 style="font-family:微软雅黑;color:#e56600;font-size:9pt;font-weight:bold;">第一条:借款详情如下表所示</h1>
+    <p>借款人通过{$webname}网站(以下简称“本网站”)的居间,就有关借款事项与各出借人达成如下协议：</p>
+    <table width="97%" border="0" cellspacing="0" cellpadding="0" style="margin:0 auto">
+      <tr>
+        <th height="30">出借人(ID) </th>
+        <th>借款金额 </th>
+        <th>借款期限 </th>
+        <th>年息率 </th>
+        <th>借款开始日 </th>
+        <th>借款到期日 </th>
+        <th>还款总额 </th>
+      </tr>
+      <volist name="BorrowTenderInfo" id="vo">
+        <tr>
+          <td height="30">{$vo.username}</td>
+    			<td>{$vo.account}元</td>
+    			<if condition="($vo['isday'] eq 1)">
+    			<td>{$vo.time_limit_day}天</td>
+    			<elseif condition="($vo['borrow_type'] eq 5)"/>
+				<td>秒标</td>
+				<else/>
+    			<td>{$vo.time_limit}个月</td>
+    			</if>
+    			<td>{$vo.apr}%</td>
+    			<td>{$vo.success_time|date='Y-m-d H:i:s',###}</td>
+    			<td>{$vo.end_time||date='Y-m-d H:i:s',###}</td>
+    			<td>{$vo.repayment_account}元</td>
+        </tr>
+  	  </volist>
+    </table>
+    <p>{$content|htmlspecialchars_decode}</p>
+  </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+  <!-- footer -->
+      <include file="Public:footer"/>
+  <!-- footer end -->
+</body>
+</html>

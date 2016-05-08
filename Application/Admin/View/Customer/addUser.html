@@ -1,0 +1,426 @@
+<include file="Public/mainhead" />
+<script language="javascript" src="__PUBLIC__/admin/timepicker/WdatePicker.js"></script>
+
+<style type="text/css">
+  .module_border {
+  	height: 30px;
+  	line-height: 27px;
+  	text-align: left;
+  	width: 100%;
+  }
+  .module_border .l {
+  	float: left;
+  	padding: 4px 5px 0 0;
+  	text-align: right;
+  	width: 130px;
+  }
+  .module_border .c {
+  	float: left;
+  	padding: 4px 5px 3px 10px;
+  }
+  .main_right {
+  	padding: 5px 2px 0 5px;
+  	width: 82%;
+  }
+  .module_border .w {
+  	float: left;
+  	padding: 4px 5px 0 0;
+  	text-align: right;
+  	width: 200px;
+  }
+  .module_submit {
+  	padding: 10px 0px;
+  	text-align: center;
+  }
+  .module_submit input {
+  	cursor: pointer;
+  }
+</style>
+<script type="text/javascript">
+$(document).ready(function (){
+	$("#province").change(function(){
+	  var province = $(this).val();
+	  var count = 0;
+	  $.ajax({
+  		url:"{:U(MODULE_NAME.'/Customer/Ajaxarea')}",
+  		dataType:'json',
+  		data:"id="+province,
+  		success:function(json){
+  			$("#city option").each(function(){
+  			  $(this).remove();
+  			});
+  			$("#area option").each(function(){
+  			  $(this).remove();
+  			});
+  			$("#city").html("<option value=''>请选择</option>");
+  			$("#area").html("<option value=''>请选择</option>");
+  			$(json).each(function(){
+  			  $("<option value='"+json[count].id+"'>"+json[count].name+"</option>").appendTo("#city");
+  			  count++;
+  			});
+  	  }
+	  });
+  });
+
+  $("#city").change(function(){
+	  var province = $(this).val();
+	  var count = 0;
+	  $.ajax({
+		  url:"{:U(MODULE_NAME.'/Customer/Ajaxarea')}",
+		  dataType:'json',
+		  data:"id="+province,
+		  success:function(json){
+			  $("#area option").each(function(){
+				  $(this).remove();
+			  });
+			  $(json).each(function(){
+  				$("<option value='"+json[count].id+"'>"+json[count].name+"</option>").appendTo("#area");
+  				count++;
+			  });
+			  if(count>0){
+				  $("#area").show();
+			  }else{
+				  $("#area").hide();
+			  }
+			}
+		});
+	});
+
+  $("#area").change(function(){
+
+  });
+
+  //检查要提交的修改密码表单       
+  $("#addUserForm").submit(function() {
+    var username = $("input[name='username']").val();
+    var password = $("input[name='password']").val();     //密码
+    var password1 = $("input[name='password1']").val();     //重复密码
+    var card_id = $("input[name='card_id']").val();     //证件号码
+    var email = $("input[name='email']").val();  
+    var phone = $("input[name='phone']").val();
+    //用于错误提示信息
+    var errorMsg = '';
+
+    //用户名检查
+    if (username.length == 0) {
+      errorMsg += '用户名必须填写<br />';
+    }else if(username.length > 15 || username.length < 4){
+      errorMsg += '用户名长度在4到15个字符之间<br />';
+    }else if(isChinaOrNumbOrLett(username) == false){
+      errorMsg += '用户名由汉字、字母、数字、下划线组成<br />';
+    }else{
+      $.ajax({
+        type: "post",
+        async:false,    //同步ajax提交
+        url: '{:U(MODULE_NAME."/Customer/checkUser")}',
+        data: {username:username},
+        success: function(result){
+          if(result=='1'){
+            $('#username').html("<font color='red'>该用户名已经存在!不能再注册</font>");
+            $("input[name='username']")[0].focus();  
+            errorMsg += '该用户名已经存在!不能再注册!<br />';
+          }else{
+            $('#username').html('');
+          }
+        } 
+      });
+    }
+
+    //密码检查
+    if(password.length == 0){
+      errorMsg += '密码必须填写<br />';
+    }else if(password.length < 4){
+      errorMsg += '密码过于简单<br />';
+    }else if(password !== password1){
+      errorMsg += '确认密码不相符<br />';
+    }
+
+    //证件号码检查
+    if(card_id.length != 0 ){
+      $.ajax({
+        type: "post",
+        async:false,
+        url: '{:U(MODULE_NAME."/Customer/checkCardId")}',
+        data: {card_id:card_id},
+        success: function(result){
+          if(result=='1'){
+            $("input[name='card_id']")[0].focus();  
+            errorMsg += '该证件号码已存在!不能再注册<br />';
+          }
+        }
+      });
+    }
+
+    //邮箱检查
+    if (email.length == 0 ) {
+      errorMsg += '邮箱必须填写<br />';
+    }else if(isEmail(email) == false){
+      errorMsg += '请检查邮箱格式<br />';
+    }else{
+      $.ajax({
+        type: "post",
+        async:false,    //改为同步提交ajax
+        url: '{:U(MODULE_NAME."/Customer/checkEmail")}',
+        data: {email:email},
+        success: function(result){
+          if(result=='1'){
+            $('#email').html("<font color='red'>邮箱已经存在，请换一个</font>");
+            $("input[name='email']")[0].focus();  
+            errorMsg += '邮箱已经存在，请换一个<br />';
+          }else{
+            $('#email').html('');
+          }
+        } 
+      });
+    }
+
+    //手机号检查
+    if(phone.length != 0 ){
+      if(!/^1[34578][0-9]\d{8}$/.test(phone)){
+        errorMsg += '请填写正确的手机号<br />';
+      }else{
+        $.ajax({
+          type: "post",
+          async:false,
+          url: '{:U(MODULE_NAME."/Customer/checkphone")}',
+          data: {phone:phone},
+          success: function(result){
+            if(result=='1'){
+              $('#phone').html("<font color='red'>该手机已经存在!不能再注册</font>");
+              $("input[name='phone']")[0].focus();  
+              errorMsg += '该手机已经存在!不能再注册<br />';
+            }else{
+              $('#phone').html('');
+            }
+          } 
+        });
+      }  
+    }
+
+    if(errorMsg.length > 0){
+      parent:parent.$.layer({
+        shade: [0.3, '#000'],
+        area: ['auto','auto'],
+        shadeClose: true,       //点击对话框外部即关闭
+        dialog: {
+          msg: errorMsg,
+          btns: 1,                    
+          type: 8,
+          btn: ['确定'],
+          no: function(){
+
+          }
+        }
+      });
+      return false;
+    }else{  
+      return true;
+    }
+  });
+
+  function isEmail(str){ 
+    var myReg = /^[-_A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+    if(myReg.test(str)) return true; 
+    return false; 
+  }
+
+  function isChinaOrNumbOrLett(s){ //判断是否是汉字、字母、数字组成 
+    var regu = "^[0-9a-zA-Z\_\u4e00-\u9fa5]+$";
+    var re = new RegExp(regu);
+    if (re.test(s)){
+      return true;
+    }else{
+      return false;
+    } 
+  }
+
+});
+</script>
+
+<form name="form_user" id="addUserForm" method="post" action="{:U(MODULE_NAME.'/Customer/addUserInsert')}" autocomplete="off" >
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="top" >
+        <table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="31"><div class="titlebt">添加用户</div></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" bgcolor="#F7F8F9">
+        <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="td_top">
+              <table width="70%" border="0" cellpadding="0" cellspacing="0" class="content_fm">
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">用户名：</div>
+                      <div class="c">
+                        <input name="username" type="text"  value="" class="input_w" />
+                        <font color="#FF0000">*</font><span id="username"></span> </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">登录密码：</div>
+                      <div class="c">
+                        <input name="password" type="password" class="input_w" />
+                        <font color="#FF0000">*</font> </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">确认密码：</div>
+                      <div class="c">
+                        <input name="password1" type="password" class="input_w" />
+                        <font color="#FF0000">*</font> </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">真实姓名：</div>
+                      <div class="c">
+                        <input name="realname" type="text" value="" class="input_w" />
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">性　别： </div>
+                      <div class="c">
+                        <input type="radio" name="sex" value="1" checked="checked" />
+                        男&nbsp;&nbsp;
+                        <input type="radio" name="sex" value="2" />
+                        女&nbsp;&nbsp; </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="module_border">
+                      <div class="l">生日：</div>
+                      <div class="c">
+                        <input type="text" name="birthday"  class="input_w" value="" size="20"  onClick="WdatePicker()"/>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">状态：</div>
+                      <div class="c">
+                        <input name="status" type="radio" value="0" />
+                        关闭
+                        <input name="status" type="radio" value="1" checked />
+                        开通 </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">账号类型：</div>
+                      <div class="c">
+                        <select name="type" id="type" class="searchoption">
+                          <option value="1">正式账号</option>
+                          <option value="2">测试账号</option>
+                        </select>
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">所在地：</div>
+                      <div class="c">
+                        <select name="province" id="province" class="searchoption">
+                          <option value="">请选择</option>
+                          <Volist name="province" id="p">
+                            <option value="{$p.id}">{$p.name}</option>
+                          </Volist>
+                        </select>
+                        <select name="city" id="city" class="searchoption">
+                          <option value="">请选择</option>
+                        </select>
+                        <select name="area" id="area" class="searchoption">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="module_border">
+                      <div class="l">证件类型：</div>
+                      <div class="c">
+                        <select name="card_type" class="searchoption">
+                          <Volist name="card_type" id="item">
+                            <option value="{$item.id}">{$item.name}</option>
+                          </Volist>
+                        </select>
+                        <input name="card_id" type="text" value="" class="input_w" style="width:212px;" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">电子邮件地址： </div>
+                      <div class="c">
+                        <input name="email" value="" type="text"  class="input_w" />
+                        <font color="#FF0000">*</font><span id="email"></span></div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">QQ：</div>
+                      <div class="c">
+                        <input name="qq" type="text" value="" class="input_w" />
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">家庭电话：</div>
+                      <div class="c">
+                        <input name="tel" type="text" value="" class="input_w" />
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">手机：</div>
+                      <div class="c">
+                        <input name="phone" type="text" value="" class="input_w" /><span id="phone"></span>
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td><div class="module_border">
+                      <div class="l">详细地址：</div>
+                      <div class="c">
+                        <input name="address" type="text" value="" class="input_w" />
+                      </div>
+                    </div></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="module_border">
+                      <div class="l">&nbsp;</div>
+                      <div class="c">
+                      <input type="submit" class="btn" value="确认提交" />
+                      <input type="reset"  class="btn" name="reset" value="重置表单" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr>
+            <td height="40"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<include file="Public/commonfoot" />

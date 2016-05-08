@@ -1,0 +1,283 @@
+/* ----------------------------------------------------------------------------------------------------
+ * common dialogbox
+ * ----------------------------------------------------------------------------------------------------
+ */
+fieldset,img {
+	border: none;
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+.sprite_errorTips {
+	background-position: 0 -1289px;
+}
+
+.sprite {
+	overflow: hidden;
+	display: inline;
+	vertical-align: baseline;
+}
+
+.sprite_close {
+	width: 18px;
+	height: 18px;
+	background-position: 0 -966px;
+}
+
+.sprite,.onError,.onCorrect,.onFocus,.onShow,.onLoad,#help,#latestDeals
+	{
+	background-image: url(../images/sprite_skin.png);
+	background-repeat: no-repeat;
+}
+
+#highlightTips,#errorTips,.bidtips,.dialogbox {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.dialogbox {
+	position: absolute;
+	display: none;
+	border: 1px solid #000;
+	background: #fff;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+}
+
+.dialogbox h2 {
+	font-weight: normal;
+	margin: 0;
+}
+
+.dialogboxTitle {
+	padding: 5px 3px 5px 10px;
+	height: 100%;
+	background: #000;
+	color: #fff;
+}
+
+.dialogboxTitle h2 {
+	float: left;
+	font-size: 12px;
+	font-weight: bolder;
+	margin: 0;
+}
+
+.dialogboxTitle p {
+	float: right;
+	margin: 0;
+}
+
+.dialogboxTitle p a:hover .sprite_close {
+	background-position: -22px -966px;
+	margin: 0;
+}
+
+.dialogboxContent {
+	overflow: hidden;
+	padding: 15px;
+	cursor: default;
+}
+
+.iconList {
+	display: block;
+	float: left;
+	display: inline;
+	margin: 2px;
+	padding: 1px;
+	border: 1px solid #DEF0FA;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+}
+
+#newIconList {
+	clear: both;
+	padding: 10px 0;
+}
+
+.button {
+	display: -moz-inline-box;
+	display: inline-block;
+	vertical-align: text-bottom;
+}
+
+/* .skin .button .first-child {} */
+.skin .button a {
+	line-height: 2.2;
+}
+
+.skin .button button,.skin .button a,.skin .button a:visited {
+	float: left;
+	padding: 0 10px 0 12px;
+	height: 2.5em;
+	line-height: 2.2;
+	color: #035A87;
+}
+
+.skin .button-hover {
+	border-color: #86C5E3;
+	background-position: 0 -90px;
+}
+
+.skin .button-hover .first-child {
+	border-color: #86C5E3;
+}
+
+.skin .button-focus {
+	border-color: #86C5E3;
+	background-position: 0 -270px;
+}
+
+.skin .button-focus .first-child {
+	border-color: #86C5E3;
+}
+
+.skin .button-active {
+	border-color: #304369;
+	background-position: 0 -270px;
+}
+
+.skin .button-active .first-child {
+	border-color: #304369;
+	color: #fff;
+}
+
+.skin .button-checked {
+	border-color: #304369;
+	background-position: 0 -270px;
+}
+
+.skin .button-checked .first-child {
+	border-color: #304369;
+	color: #fff;
+}
+
+.skin .button-checked button,.skin .button-checked a,.skin .button-checked a:visited
+	{
+	color: #fff;
+	cursor: default;
+}
+
+.skin .button-hilite {
+	border-color: #8EC66D;
+	background: url(../images/sprites/sprite_skin.png) repeat-x 0 -720px;
+}
+
+.skin .button-hilite .first-child {
+	border-color: #8EC66D;
+}
+
+.skin .button-hilite button,.skin .button-hilite a,.skin .button-hilite a:visited
+	{
+	color: #09700B;
+}
+
+.skin .button-hilite-hover {
+	border-color: #8EC66D;
+	background-position: 0 -630px;
+}
+
+.skin .button-hilite-hover .first-child {
+	border-color: #8EC66D;
+}
+
+.skin .button-hilite-focus {
+	border-color: #8EC66D;
+	background-position: 0 -810px;
+}
+
+.skin .button-hilite-focus .first-child {
+	border-color: #8EC66D;
+}
+
+.skin .button-hilite-active {
+	border-color: #8EC66D;
+	background-position: 0 -810px;
+}
+
+.skin .button-hilite-active .first-child {
+	border-color: #8EC66D;
+}
+
+.skin .button-hilite-checked {
+	border-color: #304369;
+	background-position: 0 -810px;
+}
+
+.skin .button-hilite-checked .first-child {
+	border-color: #304369;
+	color: #fff;
+}
+
+.skin .button-hilite-checked button,.skin .button-hilite-checked a,.skin .button-hilite-checked a:visited
+	{
+	color: #fff;
+	cursor: default;
+}
+
+.skin .split-button a {
+	background-image: url(../images/sprites/sprite_skin.png);
+	background-position: right -1512px;
+	background-repeat: no-repeat;
+}
+
+.skin .split-button-focus a {
+	background-position: right -1562px;
+}
+
+.skin .split-button-hover a {
+	background-position: right -1562px;
+}
+
+.skin .split-button-activeoption {
+	border-color: #ccc;
+	background-position: 0 0;
+}
+
+.skin .split-button-activeoption a {
+	background-position: right -1612px;
+}
+
+.skin .split-button-disabled a {
+	background-position: right -1612px;
+}
+
+.skin .button-disabled {
+	border-color: #ccc;
+	background-position: 0 -180px;
+}
+
+.skin .button-disabled .first-child {
+	border-color: #ccc;
+}
+
+.skin .button-disabled button,.skin .button-disabled a,.skin .button-disabled a:visited
+	{
+	color: #A6A6A6;
+	cursor: default;
+}
+
+.sendReq {
+	border: none;
+	width: 34px;
+	height: 21px;
+	background: url(../images/sprites/sprite_account.png) no-repeat -120px
+		-185px;
+	cursor: pointer;
+}
+
+.sendReq2 {
+	border: none;
+	width: 58px;
+	height: 21px;
+	background: url(../images/sprites/sprite_account.png) no-repeat -120px
+		-208px;
+	cursor: pointer;
+}

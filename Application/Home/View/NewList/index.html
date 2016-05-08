@@ -1,0 +1,42 @@
+<include file="Public:head"/>
+<!-- /头部 -->
+		<!-- headerWrap end -->
+		<div class="mainBox webAuto clearfix">
+			<!--left bar-->
+			<include file="Public:leftbar" />
+			<!---left bar结束-->
+			<div class="rightContent fl">
+				<div class="title">{$list[0]['name']}</div>
+				<if condition="($duli eq 1)">
+					<div class="ArticleContent">
+						<p>{$content}</p>
+					</div>
+				<else />
+					<div class="listing">
+						<div class="titleLine">
+							<div class="w570 fl">标题</div>
+							<div class="w174 fl" style="margin-left:23px">发布时间</div>
+						</div>
+						<ul class="cleafix">
+							<foreach name='list' item='v'>
+								<li>
+									<span class="tigs fl">[{$v.name}]</span>
+									<span class="fl" style="padding-left:10px;">
+										<a href="{:U('NewContent/index',array('id'=>$v['id'],'pid'=>$v['pid']))}" title="{$v.post_title}">{$v.post_title|str_cut="28"}</a> <if condition="$v['top'] eq 1"><span class="top">置顶</span></if>
+									</span>
+									<span class="time fl">{$v['post_date']|date='Y-m-d',###}</php></span>
+								</li>
+							</foreach>
+						</ul>
+						<div class="Pageing">{$page}</div>
+					</div>
+				</if>
+			</div>
+			<!-- itemAttr end -->
+		</div>
+		<!-- mainBox end -->
+		<!-- 底部 -->
+		<include file="Public:footer"/>
+		<!-- /底部 -->
+	</body>
+</html>

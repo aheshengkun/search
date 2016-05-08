@@ -1,0 +1,58 @@
+<include file="Public/windowhead" />
+
+<form name="form1" id="ajaxForm" method="post" action="{:U(MODULE_NAME.'/Customer/authMethod')}" autocomplete="off" style="margin-top:10px;">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content_wd">
+      <tr>
+          <td align="right" width="90">认证手机：</td>
+          <td align="left"><input type="text" name="phone" value="" class="input" size="28" /></td>
+      </tr>
+      <tr>
+          <td colspan="2" align="center">
+          	<input type="hidden" name="userid" value="{$user_id}" />
+          	<input type="hidden" name="type" value="{$type}" />
+            <!-- <input type="submit" class="btn" value="确认提交" /> -->
+            <input type="button" class="btn" id="sub" value="确认提交" />
+          </td>
+      </tr>
+  </table>
+</form>
+<script type="text/javascript">
+	var ajaxCallUrl = "{:U(MODULE_NAME.'/Customer/authMethod')}";
+  var index = parent.layer.getFrameIndex(window.name);    //当前弹窗层的索引
+  
+  $('#sub').on('click',function(){
+    var phone = $("input[name='phone']");
+    if(phone.val() == ''){
+      parent.layer.msg('手机号必须填写',1);
+      return false;
+    }else{
+		//手机号检查
+		if(!/^1[34578][0-9]\d{8}$/.test(phone.val())){
+			parent.layer.msg('请填写正确的手机号');
+			return false;
+		}
+	}
+    
+    //ajax提交
+    $.ajax({
+      type: 'POST',
+      async: false,
+      url:ajaxCallUrl,
+      data:$('#ajaxForm').serialize(),// 要提交的表单 
+      success: function(msg) {
+        //注意ajax提交后由父页面层被彻底关闭后执行的回调函数end刷新页面。 
+        if(msg.status == 1){
+          //提交成功
+          parent.layer.msg(msg.info,1,{type:9});
+          parent.layer.close(index);
+        }else{
+          //提交失败,则不关闭弹窗
+          parent.layer.msg(msg.info,1);
+          // parent.layer.close(index);
+        }
+      }
+    });
+  });
+</script>
+
+<include file="Public/commonfoot" />

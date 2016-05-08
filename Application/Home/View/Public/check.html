@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>审核进度-{$webname}</title>
+		<link rel="stylesheet" href="__PUBLIC__/Css/home/guangfacaifu/common.css">
+	</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:head"/>
+	<!-- /头部 -->
+	<div class="mainBoxWrap">
+		<div class="mainBox webAuto clearfix">
+			<div class="webAuto clearfix">
+				<!-- 左侧列表 -->
+				<include file="Borrow:left" />
+				<div class="rightContent fl">
+					<div class="title">审核进度</div>
+					<div class="ArticleContent">
+					<if condition="$_SESSION['UserName']">
+							<p>
+                            <?php if($borrowStatus==''){?>
+									<p><img style="padding-left:380px;width:130px;heigh:130px;" src="__PUBLIC__/Images/home/guangfacaifu/no_search.jpg"><span style="font-size:14px">您好!</span></p>
+									<span style="padding-left:300px;" class="red">未查到您的申请记录！</span>
+								<?php }elseif($borrowStatus['status'] ==3){?>
+									<p><img style="padding-left:380px;width:130px;heigh:130px"  src="__PUBLIC__/Images/home/guangfacaifu/no_past.jpg"><span>抱歉!</span></p>
+									<span style="padding-left:300px;" class="red">您的借款审核失败</span>
+								<?php }elseif($borrowStatus['status'] ==2){?>
+									<p><img style="padding-left:380px;width:130px;heigh:130px"  src="__PUBLIC__/Images/home/guangfacaifu/ing.jpg"><span>您好!</span></p>
+									<span style="padding-left:300px;" class="red">您的借款申请[<span class="red"><?php echo $borrowStatus['name'];?>正在审核中。。。请耐心等待。</span>
+								<?php }else{?>
+									<p><img style="padding-left:380px;width:130px;heigh:130px"  src="__PUBLIC__/Images/home/guangfacaifu/yes.gif"><span style="font-size:40px;">恭喜!</span></p>
+									<span style="padding-left:300px;margin-top:30px" class="green">您最近申请的借款标 [<span class="red"><?php echo $borrowStatus['name'];?></span>] 已审核通过！</span>
+								<?php }?></p>	
+						<else/>
+							<p style="height:300px;line-heigh:300px;text-align:center;font-size:18px">温馨提示：<span style="color:red;">请登录后再进行查询！</span></p>
+						</if>
+					</div>
+					
+				</div>
+				<!-- end -->
+			</div>
+		</div>
+		<!-- mainBox end -->
+	</div>
+	<!-- 底部 -->
+	<include file="Public:footer"/>
+	<!-- /底部 -->
+</body>
+</html>

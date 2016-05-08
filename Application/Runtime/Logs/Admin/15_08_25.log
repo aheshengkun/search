@@ -1,0 +1,147 @@
+[ 2015-08-25T08:49:19+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:49:33+08:00 ] 127.0.0.1 /searchsys/Admin/ArticleContent/index.html
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'top' in 'field list'
+
+[ 2015-08-25T08:52:22+08:00 ] 127.0.0.1 /searchsys/Admin/ArticleContent/index.html
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_posts' doesn't exist
+
+[ 2015-08-25T08:52:26+08:00 ] 127.0.0.1 /searchsys/Admin/ArticleContent/index.html
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_posts' doesn't exist
+
+[ 2015-08-25T08:53:16+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:53:17+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:55:41+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:42+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:44+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:46+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:48+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:50+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:55:58+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:55:59+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:56:01+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T08:56:02+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:56:06+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: 无法加载控制器:System
+
+[ 2015-08-25T08:59:15+08:00 ] 127.0.0.1 /searchsys/Admin/System/sysLog.html
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_user_log' doesn't exist
+
+[ 2015-08-25T09:00:53+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:01:28+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:01:29+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:01:32+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:04:57+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:05:01+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:07:32+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:07:49+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:15:59+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:16:01+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:20:12+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T09:21:03+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T10:17:25+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T10:17:27+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T10:17:32+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:03:07+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:03:45+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:03:49+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:07:25+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:07:27+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:07:31+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:07:46+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:09:19+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:09:43+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:09:45+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:10:34+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:10:36+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T11:12:49+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T12:00:09+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T17:12:04+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+
+[ 2015-08-25T17:12:59+08:00 ] 127.0.0.1 /searchsys/Admin/Index/undefined
+ERR: 非法操作:undefined
+

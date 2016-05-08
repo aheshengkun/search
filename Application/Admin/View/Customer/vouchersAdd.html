@@ -1,0 +1,157 @@
+<include file="Public/mainhead" />
+
+<script language="javascript" src="/Public/Js/timepicker/WdatePicker.js"></script>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #EEF2FB;
+}
+textarea {
+	display: block;
+}
+.edit_left {
+  padding-right: 2px;
+  text-align: right;
+  width: 10%;
+}
+.edit_right {
+  height: 30px;
+  width: 20%;
+  padding-left:5px;
+}
+.main {
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+.main_content {
+  margin-bottom: 10px;
+  overflow: auto;
+  border: 1px solid #CCCCCC;
+}
+.module_border {
+  border-bottom: 1px solid #CCCCCC;
+  height: 30px;
+  line-height: 27px;
+  text-align: left;
+  width: 100%;
+}
+.module_border .l {
+  float: left;
+  padding: 4px 5px 0 0;
+  text-align: right;
+  width: 120px;
+}
+.module_border .c {
+  float: left;
+  padding: 4px 5px 3px 10px;
+}
+.main_right {
+  padding: 5px 2px 0 5px;
+  width: 82%;
+}
+.module_border .w {
+  float: left;
+  padding: 4px 5px 0 0;
+  text-align: right;
+  width: 200px;
+}
+.module_submit {
+  border-bottom: 1px solid #CCCCCC;
+  height: 30px;
+  margin-top: 6px;
+  text-align: center;
+}
+.module_submit input{
+	cursor:pointer;
+}
+</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <!--添加代金券-->
+	<tr>
+    <td valign="top">
+      <table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+          <tr>
+              <td height="31">
+               <div class="titlebt2">添加代金券</div>
+              </td>
+          </tr>
+      </table>
+    </td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+      <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+              <td class="td_top" style="padding-left:20px;">
+                <form name="form1" method="post" action="{:U(MODULE_NAME.'/Vouchers/Add')}" onSubmit="return check_form();" autocomplete="off" style="margin-bottom:2px;" >
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content dyTable">
+                      <tr>
+                        <td>
+                          <div class="module_border">
+                            <div class="l">代金券单张金额：</div>
+                            <div class="c">
+                                <input type="text" name="money"  class="input" value="" size="10" />  
+                            </div>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="module_border">
+                            <div class="l">添加数量：</div>
+                            <div class="c">
+                                <input type="text" name="amount"  class="input" value="" size="10" />  
+                            </div>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="module_border">
+                            <div class="l">有效期：</div>
+                            <div class="c">
+                                <input type="text" name="valid"  class="input" value="" size="10" onClick="WdatePicker();"/>  
+                            </div>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="module_submit" >
+                              <input type="submit"  name="submit" value="确认提交" />
+                              <input type="reset"  name="reset" value="重置表单" />
+                          </div>
+                        </td>
+                      </tr>
+                  </table>
+                </form>
+              </td>
+          </tr>
+      </table>
+		</td>
+	</tr>
+ </table>
+<script>
+function check_form(){
+	 var frm = document.forms['form1'];
+	 var name = frm.elements['name'].value;
+	 var content = frm.elements['content'].value;
+	 var errorMsg = '';
+	  if (name.length == 0 ) {
+		errorMsg += '标题必须填写' + '\n';
+	  }
+	  
+	  if (errorMsg.length > 0){
+		alert(errorMsg); return false;
+	  } else{  
+		return true;
+	  }
+}
+</script>
+
+<include file="Public/commonfoot" />

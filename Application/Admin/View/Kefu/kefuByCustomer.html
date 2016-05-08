@@ -1,0 +1,145 @@
+<include file="Public/mainhead" />
+<script language="javascript" src="__PUBLIC__/admin/timepicker/WdatePicker.js"></script>
+
+<script type="text/javascript">
+  $(function(){
+    $('#sub').click(function(){
+      var dotime1 = $('#dotime1').val();
+      var dotime2 = $('#dotime2').val();
+      var d1   =   (new Date(Date.parse(dotime1.replace(/-/g,   "/")))).getTime();
+      var d2   =   (new Date(Date.parse(dotime2.replace(/-/g,   "/")))).getTime();
+      if(d1 > d2){
+        // layer.msg('时间选取前一项不能大于后一项');
+        parent:parent.$.layer({
+          shade: [0.3, '#000'],
+          area: ['auto','auto'],
+          shadeClose: true,       //点击对话框外部即关闭
+          dialog: {
+            msg: '注册时间选取前一项不能大于后一项',
+            btns: 1,                    
+            type: 8,
+            btn: ['确定'],
+            no: function(){
+
+            }
+          }
+        });
+        return false;
+      }
+      return true;
+    });
+  })
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+    <table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="31">
+        <div class="titlebt">专属客服({$search.name})-用户列表</div>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#F7F8F9">
+    <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td valign="top" class="td_top">
+          <div>
+            <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Kefu/kefuByCustomer')}"  autocomplete="off" >
+              <div style="float:left;">
+                搜索条件：<select name="searchoption" class="searchoption">
+                <option value="">请选择搜索条件</option>
+                <option value="name" <if condition="$search['searchoption'] eq 'name' ">selected="selected"</if> >用户名</option>
+                <option value="nicename" <if condition="$search['searchoption'] eq 'nicename' ">selected="selected"</if> >真实姓名</option>
+                <option value="phone" <if condition="$search['searchoption'] eq 'phone' ">selected="selected"</if> >手机号码</option>
+                <option value="email" <if condition="$search['searchoption'] eq 'email' ">selected="selected"</if> >电子邮箱</option>
+              </select>
+              <input type="text" name="searchvalue" value="{$search['searchvalue']}" class="input" />
+              注册时间：<input type="text" name="dotime1" id="dotime1" value="{$search.dotime1}" class="input" style="width:100px;" onClick="WdatePicker()"/> 
+              到 <input type="text" name="dotime2" value="{$search.dotime2}" id="dotime2" class="input" style="width:100px;" onClick="WdatePicker()"/>
+
+              <!-- <input name="status" type="hidden" value="" id="sta" /> -->
+              <input name="user_id" type="hidden" value="{$search.user_id}" />
+              <input name="pg" type="hidden" value="{$search.pg}" />
+              <input name="name" type="hidden" value="{$search.name}" />
+              <input type="submit" value="搜索" class="btn" id="sub" style="cursor:pointer;" />
+            </div>
+            <div style="float:right;">
+              <a href="{:U(MODULE_NAME.'/Kefu/index',array('p'=>$search['pg'],'name'=>$search['name']))}" class="btn" style="color:#fff;">返回上一级</a>
+              <a href="{:U(MODULE_NAME.'/Kefu/searchInvestInfo',array('user_id'=>$search['user_id'],'name'=>$search['name'],'p'=>$search['p']))}" class="btn" style="color:#fff;">查看用户投资</a>
+            </div>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+          <tr class="tr_title">
+            <td width="" class="main_td">用户ID</td>
+            <td width="*" class="main_td">用户名</td>
+            <td width="*" class="main_td">真实姓名</td>
+            <td width="*" class="main_td">邮箱</td>
+            <td width="*" class="main_td">手机</td>
+            <td width="*" class="main_td">所在地</td>
+            <td width="*" class="main_td">证件号码</td>
+            <td width="" class="main_td">客服添加时间</td>
+            <td width="" class="main_td">账号类型</td>
+            <td width="" class="main_td">状态</td>
+            <td width="" class="main_td">操作</td>
+          </tr>
+          <Volist name="customerdata" id="item">
+          <tr class="tr_content">
+            <td class="main_td1" align="center">{$item.id}</td>
+            <td class="main_td1" align="center">{$item.name}</td>
+            <td class="main_td1" align="center">{$item.nicename}</td>
+            <td class="main_td1" align="center">{$item.email}</td>
+            <td class="main_td1" align="center">{$item.phone}</td>
+            <td class="main_td1" align="center">{$item.areas}</td>
+            <td class="main_td1" align="center">{$item.card_id}</td>
+            <td class="main_td1" align="center">{$item.kefu_addtime|date="Y-m-d H:i:s",###}</td>
+             <td class="main_td1" align="center"><switch name="item.type" ><case value="0">未知类型</case><case value="1">正式账号</case><case value="2">测试账号</case></switch></td>
+            <td class="main_td1" align="center"><eq name="item.status" value="1">启用<else /><span class="red">禁用</span></eq></td>
+            <td class="main_td1" align="center">
+              <a href="{:U(MODULE_NAME.'/Kefu/investInfo',array('customer_id'=>$item['id'],'user_id'=>$search['user_id'],'name'=>$search['name'],'pg'=>$item['page']))}">查看投资明细</a>
+            </td>
+          </tr>
+          </Volist>
+        </table>        
+        </td>
+      </tr>
+      
+      <tr>
+        <td height="20">
+          <div style="float:left;">
+            <span class="total">用户总数：<strong style="color:red;">{$total}</strong> 人</span>
+          </div>
+          <div class="page">{$page}</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td height="20">
+          <input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/down?{$down}'" /></td>
+      </tr>
+      <tr>
+        <td height="40"></td>
+      </tr>
+      <tr>
+        <td class="left_txt">
+          <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+          客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+          <img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+          官方网站：{$Think.config.sysconfig.website}
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<include file="Public/commonfoot" />

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link href="favicon.ico" rel="shortcut icon" />
+    <title>{$CON_SEO['con_webname']}<if condition="$SEO['title'] neq ''">{$SEO['title']}</if></title>
+    <meta name="keywords" content="<if condition='$SEO["keywords"] neq ""'>{$SEO['keywords']}<else />{$CON_SEO['con_webkeywords']}</if>" />
+    <meta name="description" content="<if condition='$SEO["description"] neq ""'>{$SEO['description']}<else />{$CON_SEO['con_webdescription']}</if>" />
+	<link rel="stylesheet" href="__PUBLIC__/home/default/css/common.css" />
+	<script type="text/javascript" src="__PUBLIC__/home/default/js/jquery-1.8.3.min.js"></script>
+
+	<if condition="CONTROLLER_NAME eq 'Ucenter'">
+	    <link rel="stylesheet" href="__PUBLIC__/home/default/css/user.css" />
+		<script type="text/javascript" src="__PUBLIC__/home/default/js/area/areaSelect.js"></script>
+    </if>
+	
+	<script type="text/javascript" src="__PUBLIC__/home/default/js/SuperSlide.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/home/default/js/commont.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/home/default/js/switch.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/common/layer/layer.min.js"></script>
+</head>
+<body>
+	

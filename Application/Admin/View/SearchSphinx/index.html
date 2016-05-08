@@ -1,0 +1,27 @@
+<include file="Public/mainhead" />
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/admin/css/style.css'>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">Searchd服务状态</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>   
+    <div id="system" class="list">
+		<ul>
+        <if condition="$result eq 1">
+            <foreach name='status' item='v'>
+         		<li>{$v[0]}:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$v[1]}</li>
+            </foreach>	
+        <else/>
+        	<li>searchd服务没有启动</li>
+        </if>
+		</ul>
+	</div>
+<include file="Public/commonfoot" />

@@ -1,0 +1,122 @@
+<include file="Public/windowhead" />
+
+<form name="form1" id="ajaxForm" method="post" action="{:U(MODULE_NAME.'/System/edit')}" autocomplete="off">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content_wd">
+      <tr>
+        <td align="right" width="95">参数说明：</td>
+        <td align="left">
+          <input type="text" class="input" name="name" value="{$data.name}" />
+        </td>
+      </tr>
+      <tr>
+        <td align="right">变量名：</td>
+        <td align="left">
+          <input type="text" class="input" name="nid" value="{$data.nid}"/>&nbsp;&nbsp;请在前面加con_
+        </td>
+      </tr>
+      <tr>
+        <td align="right">所属分类：</td>
+        <td align="left">
+          <select name="type" class="searchoption">
+            <iterate name="typelist" id="v">
+            <option value="{$v.type}" <if condition="($data.type eq $v['type'])">selected</if> >{$v.type}</option>
+            </iterate>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">参数类型：</td>
+        <td align="left">
+          <input type="radio" value="string" name="style" checked="checked" onclick="change(0)" <eq name="data.style" value="string">checked="checked"</eq> /> 文本/数字 
+          <input type="radio" value="bool" name="style" onclick="change(1)" <eq name="data.style" value="bool">checked="checked"</eq> /> 布尔（Y/N）
+          <input type="radio" value="text" name="style" onclick="change(0)" <eq name="data.style" value="text">checked="checked"</eq> /> 多行
+          <div style="display:none"><input type="radio" value="pic" name="style" onclick="change(0)" <eq name="data.style" value="pic">checked="checked"</eq> />图片</div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">参数值：</td>
+        <td align="left">
+          <div id="text_v" <eq name="data.style" value="bool">style="display:none"</eq> align="left" >
+            <if condition="($data.style eq 'string') OR ($data.style eq 'pic')  OR ($data.style eq 'bool') ">
+              <input type="text" class="input" align="absmiddle" name="value1" size="38" value="{$data.value|stripslashes=###}"/>
+            </if>
+            <eq name="data.style" value="text">
+              <textarea name="value1" style="width:280px;height:46px;font-size:12px;">{$data.value|stripslashes=###}</textarea>
+            </eq>
+          </div>
+          <div id="option_v" <if condition="($data.style eq 'string') OR ($data.style eq 'text') OR ($data.style eq 'pic')">style="display:none"</if> >
+            <input type="radio" value="1" name="value2" checked="checked" <eq name="data.value" value="1">checked="checked"</eq> /> 是
+            <input type="radio" value="0" name="value2" <eq name="data.value" value="0">checked="checked"</eq> /> 否 
+          </div>
+          <div style="clear:both;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">状态：</td>
+        <td align="left">
+          <input type="radio" value="0" name="status" checked="checked" <eq name="sys.value" value="0">checked="checked"</eq> /> 系统 
+          <input type="radio" value="1" name="status" <if condition="($sys.status eq 1) OR ($sys.status eq '')">checked="checked"</if> /> 自定义
+        </td>
+      </tr>
+      <tr>
+        <div  style="margin-top:10px\9;height:0;line-height:0;">
+          <td align="center" colspan="2" height="0">
+            <input type="hidden" value="{$data.id}" name="id" />
+            <!-- <input type="submit" id="sub" class="btn" value="提交" />  -->
+            <input type="button" id="sub" class="btn" value="提交" />
+            <input type="reset" class="btn" value="重置" />
+          </td>
+        </div>
+      </tr>
+  </table>           
+</form>
+<script type="text/javascript">
+  function change(val){
+    if (val==0){
+  	  document.getElementById("text_v").style.display ="";
+  	  document.getElementById("option_v").style.display ="none";
+    }else{
+  	  document.getElementById("text_v").style.display ="none";
+  	  document.getElementById("option_v").style.display ="";
+    }
+  }
+
+  var ajaxCallUrl = "{:U(MODULE_NAME.'/System/edit')}";
+  var index = parent.layer.getFrameIndex(window.name);    //当前弹窗层的索引
+  $('#sub').on('click',function(){
+    var name = $("input[name='name']");
+    var nid = $("input[name='nid']");
+    if(name.val() == ''){
+      name.focus();
+      parent.layer.msg('参数说明不能为空');
+      return false;
+    }
+    if(nid.val() == ''){
+      nid.focus();
+      parent.layer.msg('变量名不能为空');
+      return false;
+    }
+
+    //ajax提交
+    $.ajax({
+      type: 'POST',
+      async: false,
+      url:ajaxCallUrl,
+      data:$('#ajaxForm').serialize(),// 要提交的表单 
+      success: function(msg) {
+        //注意ajax提交后由父页面层被彻底关闭后执行的回调函数end刷新页面。 
+        if(msg.status == 1){
+          //提交成功
+          parent.layer.msg(msg.info,1,{type:9});
+          parent.layer.close(index);
+        }else{
+          //提交失败,则不关闭弹窗
+          parent.layer.msg(msg.info,1);
+          // parent.layer.close(index);
+        }
+      }
+    });
+  });
+</script>
+
+<include file="Public/commonfoot" />

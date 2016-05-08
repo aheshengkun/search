@@ -1,0 +1,114 @@
+<include file="Public/mainhead" />
+
+<script type="text/javascript">
+	function Mdysearch(status){
+		$("#sta").val(status);
+		search.submit();
+	}
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">VIP认证</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Customer/vip')}" style="margin-bottom:2px;">
+                     <div style="float:left;">
+                        <!-- 用户名：
+                        <input type="text" name="username" id="username" value="{$username}"/> -->
+						选择搜索条件：
+						<select name="searchoption" class="searchoption">
+							<option value="">请选择搜索条件</option>
+							<option value="name" <if condition="$search['searchoption'] eq 'name' ">selected="selected"</if> selected>用户名</option>
+							<option value="nicename" <if condition="$search['searchoption'] eq 'nicename' ">selected="selected"</if> >真实姓名</option>
+						</select>
+						<input type="text" name="searchvalue" class="input" value="{$search['searchvalue']}" />
+
+                        <input name="vip_status" type="hidden" value="" id="sta" />
+                        <input type="button" value="搜索" class="btn"  onclick="javascript:search.submit();" />
+                      </div>
+                      <div style="float:right;">
+                      	<input type="button" value="全部" class="mdyButton btn" onClick="javascript:Mdysearch('');" />
+						<input type="button" value="未审核" class="mdyButton btn" onClick="javascript:Mdysearch(0);" />
+						<input type="button" value="已通过" class="mdyButton btn" onClick="javascript:Mdysearch(1);" />
+						<input type="button" value="未通过" class="mdyButton btn" onClick="javascript:Mdysearch(2);" />
+                      	<!-- <input type="button" value="全部" class="btn <empty name="search.examine">buttonOK</empty>" onClick="location.href='{:U(MODULE_NAME.'/Customer/vip')}'" />
+                      	<input type="button" value="未审核" class="btn <eq name="search.examine" value="0">buttonOK</eq>" onClick="location.href='{:U(MODULE_NAME.'/Customer/vip?state=0')}'" />
+                        <input type="button" value="已通过" class="btn <eq name="search.examine" value="1">buttonOK</eq>" onClick="location.href='{:U(MODULE_NAME.'/Customer/vip?state=1')}'" />
+                        <input type="button" value="未通过" class="btn <eq name="search.examine" value="2">buttonOK</eq>" onClick="location.href='{:U(MODULE_NAME.'/Customer/vip?state=2')}'" /> -->
+                      </div>
+                    </form>
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<input name="userid" type="hidden" value="{$cardArr.userid}">
+					<tr class="tr_title">
+                      <td width="*" class="main_td">用户名称</td>
+                      <td class="main_td">真实姓名</td>
+                      <td class="main_td">VIP到期时间</td>
+                      <td class="main_td">VIP状态</td>
+                      <td class="main_td">操作</td>
+					</tr>
+					<Volist name="viplist" id="item">
+					<tr class="tr_content tr_content{$item.id}">
+                      <td class="main_td1" align="center">{$item.name}</td>
+                      <td class="main_td1" align="center" >{$item.nicename}</td>
+                      <td class="main_td1" align="center" >{$item.expire_time|date='Y-m-d',###}</td>
+                      <td class="main_td1" align="center" >
+                        <switch name="item.vip_status">
+                            <case value="0"><font color="#FF0000">未审核</font></case>
+                            <case value="1"><font color="#009900">审核通过</font></case>
+                            <case value="2"><font color="#00ffff">审核未通过</font></case>
+                            <default />default
+                        </switch>
+                      </td>
+                      <td class="main_td1" align="center" >
+                       <if condition="($item['vip_status'] eq 0) ">
+                        <a href="javascript:void(0);" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/UpdateVip",array("vipid"=>$item["v_id"],"customer_id"=>$item["customer_id"]))}','Vip申请：{$item.name}','260px','140px');">审核</a>
+
+                       <else />--</if>
+                     </td>
+					</tr>
+					</Volist>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+                <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}
+                </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

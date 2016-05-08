@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>注册-{$webname}</title>
+	<link rel="stylesheet" href="__PUBLIC__/Css/home/guangfacaifu/common.css">
+	<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/SuperSlide.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/commont.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/switch.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Js/home/checkpwd.js"></script>
+	<style type="text/css">
+		#pwdpower {
+			width:195px;
+			border:0px none;
+			background-color:#f1f1f1
+		}
+		#pwdpower td {
+			text-align:center;
+			vertical-align:middle;
+			padding:1px;
+			color:#adadac;
+		}
+		#pwdpower #pweak{
+			border-right:1px solid #dedede;
+		}
+		#pwdpower #pmedium{
+			border-right:1px solid #dedede;
+		}
+		#pwdpower #pstrong{
+			border-right:1px solid #dedede;
+		}
+	</style>
+</head>
+<body>
+	<!-- 头部 -->
+     	<include file="Public:head"/>
+    <!-- /头部 -->
+	</div>
+    <!-- headerWrap end -->
+	<!-- mainBox -->
+	<div class="mainBox webAuto clearfix">
+		<div class="signUpTitle clearfix">
+			<img src="__PUBLIC__/Images/home/guangfacaifu/iconS-5.png" height="28" width="28" class="fl" alt="">
+			<h2 class="fl">用户注册</h2>
+		</div>
+		<div class="signUpBox">
+			<ul class="clearfix">
+				<form method="post" action="__URL__/register_action" onsubmit="return checkForm()">
+				<li>
+					<span class="Tig">用户名：</span>
+					<input type="text" value="" id="username" onblur="checkAccount(this.value,this.value)" name="username" class="text" size="25">
+                    <span class="tig" id="user_account_div"></span>
+				</li>
+				<li>
+					<span class="Tig">邮箱：</span>
+					<input type="text" class="text" size="25" id="email" onblur="checkEmail(this.value,this.value)" name="email">
+                    <span class="tig" id="user_email_div"></span>
+				</li>
+				<li>
+					<span class="Tig">密码：</span>
+					<input type="password" class="text" size="25" id="password" name="password" onblur="user_passwordHidden()" onchange="javascript:EvalPwd(this.value);" onkeyup="javascript:EvalPwd(this.value);">
+                    <span class="tig" id="user_password_div"></span>
+				</li>
+				<li><span class="Tig">密码强度：</span>
+                	<table width="30%" border="0" cellspacing="0" cellpadding="0" id="pwdpower">
+		                        <tr>
+		                          <td id="pweak" height="36" style="text-align:center">弱</td>
+		                          <td id="pmedium" height="36" style="text-align:center" >中</td>
+		                          <td id="pstrong" height="36" style="text-align:center" >强</td>
+		                        </tr>
+		                      </table>
+                </li>
+				<li>
+					<span class="Tig">确认密码：</span>
+					<input type="password" class="text" size="25" name="RePassword" id="RePassword" onblur="checkPassword()">
+                    <span class="tig" id="RePassword_div"></span>
+				</li>
+				<li>
+					<span class="Tig">真实姓名：</span>
+					<input type="text" class="text" size="25" name="realname" id="realname" onblur="checkrRalname()" >
+                    <span class="tig" id="user_realname_div"></span>
+				</li>
+				<li>
+					<span class="Tig">性别：</span>
+					<select class="selectBox fl" name="sex" id="sex">
+						<option value="1">男</option>
+						<option value="0">女</option>
+					</select>
+				</li>
+				<li>
+					<span class="Tig">邀请人帐号：</span>
+					<input type="text" class="text" size="25" name="invite_user"  ><span style="margin-left:20px">没有可以不填写</span>
+				</li>				
+				<li>
+					<span class="Tig">验证码：</span>
+					<input type="text" class="text " size="12" name="verify" id="verify" onblur="checkrVerify()" >
+					<img height="38px" width="100px" style="border: 1px solid #049E19;margin-left:15px;" id="verifyImg" src="__APP__/Public/verify/" onclick="fleshVerify()" />
+				</li>
+				<li>
+					<span class="Tig">&nbsp;</span>
+					<input type="checkbox" class="vam"  name="chkXy" id="chkXy" checked>我已阅读和同意<a href="javascript:void(0);" class="blue">隐私政策</a>和<a href="javascript:void(0);" class="blue">服务条款</a>
+				</li>
+				<li>
+					<span class="Tig">&nbsp;</span>
+                    <input type="hidden" name="invite_userid" value="{$invite_userid}" />
+
+					<input type="submit" value="注册" class="submitButton btn">
+				</li>
+				</form>
+			</ul>
+		</div>
+	</div>
+	<!-- mainBox end -->
+	<!-- 底部 -->
+		<include file="Public:footer"/>
+	<!-- /底部 -->
+
+	<script language="javascript">
+		var storusername=1;
+		var stoppassword=1;
+		var stopemail=1;
+		function checkForm(){
+		  if(document.getElementById('username').value == ""){
+			document.getElementById('user_account_div').style.display="";
+			document.getElementById('user_account_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt="">用户名不能为空!';
+			return false;
+		  }else if(document.getElementById('email').value == ""){
+			document.getElementById('user_email_div').style.display="";
+			document.getElementById('user_email_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">邮箱不能为空!</span>';
+			return false;
+		  }else if(document.getElementById('password').value == ""){
+			document.getElementById('user_password_div').style.display="";
+			document.getElementById('user_password_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">密码不能为空!</span>';
+			return false;
+		  }else if(document.getElementById('RePassword').value != document.getElementById('password').value){
+			document.getElementById('user_password_div').style.display="";
+			document.getElementById('user_password_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">两次输入的密码不一致!</span>';
+			return false;
+		  }else if(document.getElementById('realname').value == ""){
+			document.getElementById('user_realname_div').style.display="";
+			document.getElementById('user_realname_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">真实姓名不能为空!</span>';
+			return false;
+		  }else if(!document.getElementById('chkXy').checked){
+			alert('您必须同意隐私政策和服务条款才能注册');
+			return false;
+		  }
+
+		  if(stoppassword == 0 ){
+			return false;
+		  }
+		  if(stopemail == 0 ){
+			return false;
+		  }
+		}
+
+
+		function fleshVerify(){
+		  //重载验证码
+		  var timenow = new Date().getTime();
+		  document.getElementById('verifyImg').src= '__URL__/verify/'+timenow;
+		}
+
+		//密码  
+		function user_passwordHidden(){ 
+		
+			var patrn=/^\w*[a-zA-Z]+\w*$/; 	
+			var pwd=document.getElementById('password').value;
+		    if(pwd.length <6){
+			    document.getElementById('user_password_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">密码长度只能在6-16位字符之间!</span>';
+			    return false;
+		    }else if(!patrn.test(pwd)){
+			    document.getElementById('user_password_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">密码不能为纯数字</span>';
+			    return false;			
+		    }else{
+				document.getElementById('user_password_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_ok.jpg" class="vam Oiconk" alt="">';
+			  return true;
+		    }
+		}
+		 //判断密码
+		function checkPassword(){ 
+		  if(document.getElementById('password').value !== document.getElementById('RePassword').value){
+			document.getElementById('RePassword_div').style.display="";
+			document.getElementById('RePassword_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">两次输入的密码不一致!</span>';
+			stoppassword = 0;
+			return false; 
+		  }else if(document.getElementById('password').value == document.getElementById('RePassword').value){
+			document.getElementById('RePassword_div').innerHTML ='<img src="__PUBLIC__/Images/home/guangfacaifu/icon_ok.jpg" class="vam Oiconk" alt="">';
+			stoppassword = 1;
+			return false;
+		  }
+		}
+		//检测邮箱  
+		var t;
+		function checkEmail(type,vId){
+		  if(document.getElementById('email').value == ""){
+			document.getElementById('user_email_div').style.display="";
+			document.getElementById('user_email_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">邮箱不能为空!</span>';
+			return false;
+			stopjump=0;
+		  }
+		  stopemail = 1;
+		  var temp = document.getElementById("email");
+		  //对电子邮件格式的验证
+		  var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		  if(!myreg.test(temp.value)){
+			 document.getElementById('user_email_div').style.color="#ff0000";
+			 document.getElementById('user_email_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">邮箱格式不正确!</span>';
+			 stopemail = 0;
+			 return false;         
+		  }else{
+			$.post("__URL__/check_user_email",'type='+type+'&id='+vId,function(req){
+			  document.getElementById('user_email_div').innerHTML = req;
+			},'html');
+		  }
+		  t = type; 
+		}
+
+
+		//检测用户名 
+		var t;
+		function checkAccount(type,vId){
+			var str = document.getElementById('username').value;
+		  str = str.replace(/[^\x00-\xff]/g, 'xx');
+		  if(str.length <4){
+			document.getElementById('user_account_div').style.color="#ff0000";
+			  document.getElementById('user_account_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt="">用户名由4-30位字母、数字组合或者2-10位汉字组成！';
+			return false;
+		  }
+		  storusername  = 1;
+		  var temp = document.getElementById("username");
+		  //对汉字格式验证
+		  var myreg =/([\u4e00-\u9fa5]+|[a-zA-Z0-9]+)$/;
+		  if(!myreg.test(temp.value)){
+			 document.getElementById('user_account_div').style.color="#ff0000";
+			 document.getElementById('user_account_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt="">该字符违法,请输入英文大小写字母、数字、中文!';
+			 storusername  = 0;
+			 return false;
+		  }
+		  t = type; 
+		  $.post("__URL__/check_user_account",'type='+type+'&id='+vId,function(req){
+			if(req == '<img src="/Public/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">该用户名已被使用!</span>'){
+			  storusername = 0;
+			}else{
+			  storusername = 1;
+			}
+			document.getElementById('user_account_div').innerHTML = req;
+		  },'html');
+		  
+		}
+		//检测真实用名
+		var t;
+		function checkrRalname(type,vId){
+		  if(document.getElementById('realname').value == ""){
+			document.getElementById('user_realname_div').style.color="#ff0000";
+			document.getElementById('user_realname_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">真实姓名不能为空!</span>';
+			return false;
+			stopjump=0;
+		  }else{
+			document.getElementById('user_realname_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_ok.jpg" class="vam Oiconk" alt=""><span class="red">';
+		  } 
+		  stopemail = 1;
+		  var temp = document.getElementById("realname");
+		  //对汉字格式验证
+		  var myreg =/^[\u4e00-\u9fa5]+$/;
+		  if(!myreg.test(temp.value)){
+			 document.getElementById('user_realname_div').style.color="#ff0000";
+			 document.getElementById('user_realname_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_no.jpg" class="vam Oiconk" alt=""><span class="red">格式不正确，请输入汉字!</span>';
+			 stopemail = 0;
+			 return false;         
+		  }else{
+			document.getElementById('user_realname_div').innerHTML = '<img src="__PUBLIC__/Images/home/guangfacaifu/icon_ok.jpg" class="vam Oiconk" alt=""><span class="red">';
+		  }
+		}
+	</script>
+</body>
+</html>

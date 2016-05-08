@@ -1,0 +1,131 @@
+<include file="Public/mainhead" />
+
+<script type="text/javascript">
+	function Mdysearch(status){
+		$("#sta").val(status);
+		search.submit();
+	}
+	// //弹窗查看用户详细详细
+	// function userInfo(url,title){
+	// 	parent.$.layer({
+	// 		type: 2,
+	// 		closeBtn: [0, true],
+	// 		shift: 'top',
+	// 		title: '【'+title+'】的详细信息',
+	// 		shade: [0.3, '#000'],
+	// 		border : [6, 0.3, '#000'],
+	// 		moveType: 0,
+	// 		offset: ['',''],
+	// 		area: ['520px', '570px'],
+	// 		iframe: {src:url}
+	// 	});
+ //  	}
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">用户列表</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Customer/index')}" style="margin-bottom:2px;" autocomplete="off" >
+                     <div style="float:left;">
+                        选择搜索条件：
+                        <select name="searchoption" class="searchoption">
+							<option value="">请选择搜索条件</option>
+							<option value="name" <if condition="$search['searchoption'] eq 'name' ">selected="selected"</if> selected>用户名</option>
+							<option value="nicename" <if condition="$search['searchoption'] eq 'nicename' ">selected="selected"</if> >真实姓名</option>
+							<option value="phone" <if condition="$search['searchoption'] eq 'phone' ">selected="selected"</if> >手机号码</option>
+							<option value="email" <if condition="$search['searchoption'] eq 'email' ">selected="selected"</if> >电子邮箱</option>
+						</select>
+						<input type="text" name="searchvalue" class="input" value="{$search['searchvalue']}" />
+						<input name="status" type="hidden" value="" id="sta">
+                        <input type="button" value="搜索" class="btn"  onclick="javascript:search.submit();" style="cursor:pointer;" />
+                      </div>
+                      <div style="float:right;">
+						<input type="button" value="全部" class="mdyButton btn" onClick="javascript:Mdysearch('');" />
+						<input type="button" value="启用" class="mdyButton btn" onClick="javascript:Mdysearch(1);" />
+						<input type="button" value="禁用" class="mdyButton btn" onClick="javascript:Mdysearch(0);" />
+                        <input type="button" value="添加用户" class="btn" onClick="javascript:window.location.href='{:U(MODULE_NAME.'/Customer/addUser')}'"/>
+                      </div>
+                    </form>
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<tr class="tr_title">
+                        <td width="" class="main_td">ID</td>
+                        <td width="*" class="main_td">用户名</td>
+                        <td width="*" class="main_td">真实姓名</td>
+                        <td width="*" class="main_td">专属客服</td>
+                        <td width="*" class="main_td">邮箱</td>
+                        <td width="100" class="main_td">手机</td>
+                        <td width="*" class="main_td">所在地</td>
+                        <td width="*" class="main_td">证件号码</td>
+                        <td width="" class="main_td">添加时间</td>
+                        <!-- <td width="" class="main_td">账号类型</td> -->
+                        <td width="" class="main_td">状态</td>
+                        <td width="" class="main_td">操作</td>
+					</tr>
+					<Volist name="userdata" id="item">
+                      <tr class="tr_content">
+                          <td class="main_td1" align="center">{$item.id}</td>
+                          <td class="main_td1" align="center"><a href="{:U(MODULE_NAME.'/Customer/recommend',array('id'=>$item['id'],'pg'=>$search['p'],'name'=>$item['name']))}" title="查看所有推荐人">{$item.name}</a></td>
+                          <td class="main_td1" align="center">{$item.nicename}</td>
+                          <td class="main_td1" align="center">{$item.kefu}</td>
+						  <td class="main_td1" align="center"><if condition="$item['email_state'] eq 0"><a href="javascript:void(0);" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/authMethod",array("userid"=>$item["id"],"type"=>"email"))}','认证【{$item.name}】的邮箱','300px','150px');">认证邮箱</a><else />{$item.email}</if></td>
+                          <td class="main_td1" align="center"><if condition="$item['phone_status'] eq 0"><a href="javascript:void(0);" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/authMethod",array("userid"=>$item["id"],"type"=>"phone"))}','认证【{$item.name}】的手机','300px','150px');">认证手机</a><else />{$item.phone}</if></td>
+                          <td class="main_td1" align="center">{$item.area}</td>
+                          <td class="main_td1" align="center">{$item.card_id}</td>
+                          <td class="main_td1" align="center">{$item.reg_time|date="Y-m-d H:i:s",###}</td>
+                           <!-- <td class="main_td1" align="center"><switch name="item.type" ><case value="0">未知状态</case><case value="1">正式账号</case><case value="2">测试账号</case></switch></td> -->
+                          <td class="main_td1" align="center"><eq name="item.status" value="1">启用<else /><span class="red">禁用</span></eq></td>
+                          <td class="main_td1" align="center">
+                            <a href="{:U(MODULE_NAME."/Customer/userEdit?user_id=$item[id]")}">修改</a>/
+                            <!-- <a href="javascript:void(0)" onclick='userInfo("{:U(MODULE_NAME."/Customer/userinfo?id=$item[id]")}","{$item.name}");'>查看详细信息</a>  -->
+                            <a href="javascript:void(0)" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/userinfo",array("id"=>$item["id"]))}','【{$item.name}】的详细信息','520px','580px','1');">查看详情</a>
+                            <!-- /<a href="javascript:void(0);" onClick="javascript:if(confirm('确定要删除吗?删除后将不可恢复')) location.href='{:U(MODULE_NAME."/Customer/delUser?user_id=$item[id]")}'">删除</a> -->
+                          </td>
+                      </tr>
+					</Volist>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			<tr>
+				<td height="20"><input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/down?{$down}'" /></td>
+			</tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+				<img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

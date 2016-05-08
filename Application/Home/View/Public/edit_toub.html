@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBliC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$webname}</title>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/home/guangfacaifu/common.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/home/guangfacaifu/user.css">
+<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/IE6Js.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/home/guangfacaifu/commont.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/home/slide.js"></script>
+
+<script type="text/javascript">
+function fleshVerify(){
+  //重载验证码
+  var timenow = new Date().getTime();
+  document.getElementById('verifyImg').src= '__APP__/Public/verify/'+timenow;
+}
+</script>
+</head>
+
+<body>
+<!-- 头部 -->
+<include file="Public:head"/>
+<!-- 头部end -->
+<!-- 当前位置 -->
+<!--<div class="siteBoxWrap">
+	<div class="siteBox">
+	  <a href="/">首页</a><span>/</span><a href="{:U('Ucenter/user')}">我的账号</a><span>/</span>
+	  <a href="">修改自动投标规则</a>
+	</div>
+</div>-->
+<!-- 当前位置 end-- > 
+
+<!-- 用户中心中间 -->
+<div class="mainBoxWrap">
+  <div class="UserMainBox clearfix">
+    <!-- 左侧导航栏 -->
+    <include file="Ucenter:left"/>
+    <!-- 左侧导航栏end -->
+    <!-- 右侧内容栏 -->
+    <div class="right">
+      <div class="PublicBox NoBlueBg w758">
+        <div class="title clearfix">
+          <h2 class="h2title">修改自动投标规则</h2>
+        </div>
+        <div class="InfoContent fundsDetail clearfix">
+          <div class="tabClass" id="tabClass">
+            <span <eq name="stp" value="0">class="spanButton current"<else />class="spanButton"</eq>><a href="{:U('Ucenter/user_toub?stp=0')}#member_left" class="tab_current">自动列表</a></span>
+            <span <eq name="stp" value="1">class="spanButton current"<else />class="spanButton"</eq>><a href="{:U('Ucenter/user_toub?stp=1')}#member_left" class="tab_current">添加规则</a></span>
+          </div>
+          <div class="tabContent" id="tabContent">
+            <!-- 添加规则 -->
+            <div class="hideClass sDetailAdd" id="tabContent2" style="display:block;">
+              <div class="row"><span class="red">自动投标时，只有满足下面您选择的条件时系统才会为您自动投标。</span></div>
+              <form name="real_name" action="__URL__/edit_toub" method="post"  enctype="multipart/form-data" autocomplete="off">
+              <div class="row"><h3 class="h3title"><span class="blue">生效状态</span></h3></div>
+              <div class="row">
+                <span class="w120 tr">状态： </span>
+                <span><input id="status" type="checkbox" name="status" value="1" <if condition="($info.status eq 1)">checked="checked"</if>><label for="">是否启用(如果不选中则当前规则不会生效)</span>
+              </div>
+              <div class="row">
+                <span class="w120 tr">每次投标金额： </span>
+                <input  type="radio" name="tender_type" class="vam" value="1" <if condition="($info.tender_type eq 1 OR $info.tender_type eq '')"> checked="checked"</if>>
+                <span class="blue PR10">按金额投标 </span>
+                <span><input name="tender_account" type="text" maxlength="6" id="tender_account" class="textInput MR10" style="width:80px;" value="{$info.tender_account}" /></span>
+                <span>元(最少50元)</span>
+              </div>
+              <div class="row">
+                <span class="w120 tr"></span>
+                <span>（当前规则满足时系统将为您自动投标的额度，投标金额和比例都只能为大于0的整数。）</span>
+              </div>
+              <div class="row"><h3 class="h3title"><span class="blue">标的信息限制</span></h3></div>
+              <div class="row">
+                <span class="w120 tr">还款方式： </span>
+                <input id="borrow_style_status" type="checkbox" class="vam" name="borrow_style_status" value="1"  <if condition="($info.borrow_style_status eq 1)">checked="checked"</if>>
+                <span class="PR10">还款方式必须为 </span>
+                <select name="borrow_style" class="selectBox">
+                  <option value="0" <if condition="($info.borrow_style eq 0)">selected="selected"</if>>按月分期还款</option>
+                  <option value="2"  <if condition="($info.borrow_style eq 2)">selected="selected"</if>>到期还本息</option>
+                  <option value="3" <if condition="($info.borrow_style eq 3)">selected="selected"</if>>按月付息到期还本</option>
+                </select>
+                <span class="pabright">（不选中则没有此项限制）</span>
+              </div>
+              <div class="row">
+                <span class="w120 tr">借款期限： </span>
+                <input id="timelimit_status"  name="timelimit_status" class="vam" type="radio" value="0" checked="checked">
+                <span class="blue PR10">不限定借款期限范围 </span>
+                <br>
+                <span class="w120 tr"></span>
+                <span title="此选项只对按月还款、按季还款有效"><input id="timelimit_status_on" class="vam" type="radio" name="timelimit_status" value="1" <if condition="($info.timelimit_status eq 1)">checked="checked"</if> /></span>
+                <span class="PR10">借款期限按月范围必须在</span>
+                <select id="timelimit_month_first" name="timelimit_month_first" class="selectBox"> 
+                  <option  <if condition="($info.timelimit_month_first eq 1)">selected="selected"</if> value="1">1个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 2)">selected="selected"</if> value="2">2个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 3)">selected="selected"</if> value="3">3个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 4)">selected="selected"</if> value="4">4个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 5)">selected="selected"</if> value="5">5个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 6)">selected="selected"</if> value="6">6个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 7)">selected="selected"</if> value="7">7个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 8)">selected="selected"</if> value="8">8个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 9)">selected="selected"</if> value="9">9个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 10)">selected="selected"</if> value="10">10个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 11)">selected="selected"</if> value="11">11个月</option> 
+                  <option  <if condition="($info.timelimit_month_first eq 12)">selected="selected"</if> value="12">12个月</option> 
+                </select>
+                <span>~</span>
+                <select id="timelimit_month_last" name="timelimit_month_last" class="selectBox"> 
+                  <option value="1"  <if condition="($info.timelimit_month_last eq 1)">selected="selected"</if>>1个月</option> 
+                  <option value="2"  <if condition="($info.timelimit_month_last eq 2)">selected="selected"</if>>2个月</option> 
+                  <option value="3"  <if condition="($info.timelimit_month_last eq 3)">selected="selected"</if>>3个月</option> 
+                  <option value="4"  <if condition="($info.timelimit_month_last eq 4)">selected="selected"</if>>4个月</option> 
+                  <option value="5"  <if condition="($info.timelimit_month_last eq 5)">selected="selected"</if>>5个月</option> 
+                  <option value="6"  <if condition="($info.timelimit_month_last eq 6)">selected="selected"</if>>6个月</option> 
+                  <option value="7"  <if condition="($info.timelimit_month_last eq 7)">selected="selected"</if>>7个月</option> 
+                  <option value="8"  <if condition="($info.timelimit_month_last eq 8)">selected="selected"</if>>8个月</option> 
+                  <option value="9"  <if condition="($info.timelimit_month_last eq 9)">selected="selected"</if>>9个月</option> 
+                  <option value="10" <if condition="($info.timelimit_month_last eq 10)">selected="selected"</if>>10个月</option> 
+                  <option value="11" <if condition="($info.timelimit_month_last eq 11)">selected="selected"</if>>11个月</option> 
+                  <option value="12" <if condition="($info.timelimit_month_last eq 12)">selected="selected"</if>>12个月</option> 
+                </select>
+                <span class="pabright">（此选项只对按月还款、按季还款有效）</span>
+              </div>
+              <div class="row">
+                <span class="w120 tr">利率选项：</span>
+                <input id="apr_status" type="checkbox" class="vam" name="apr_status" value="1"  <if condition="($info.apr_status eq 1)">checked="checked"</if> />
+                <span>利率范围必须在 </span>
+                <select name="apr_first" class="selectBox"> 
+                  <option value="1"   <if condition="($info.apr_first eq 1)">selected="selected"</if>>1%</option> 
+                  <option value="2"   <if condition="($info.apr_first eq 2)">selected="selected"</if>>2%</option> 
+                  <option value="3"   <if condition="($info.apr_first eq 3)">selected="selected"</if>>3%</option> 
+                  <option value="4"   <if condition="($info.apr_first eq 4)">selected="selected"</if>>4%</option> 
+                  <option value="5"   <if condition="($info.apr_first eq 5)">selected="selected"</if>>5%</option> 
+                  <option value="6"   <if condition="($info.apr_first eq 6)">selected="selected"</if>>6%</option> 
+                  <option value="7"   <if condition="($info.apr_first eq 7)">selected="selected"</if>>7%</option> 
+                  <option value="8"   <if condition="($info.apr_first eq 8)">selected="selected"</if>>8%</option> 
+                  <option value="9"   <if condition="($info.apr_first eq 9)">selected="selected"</if>>9%</option> 
+                  <option value="10"  <if condition="($info.apr_first eq 10)">selected="selected"</if>>10%</option> 
+                  <option value="11"  <if condition="($info.apr_first eq 11)">selected="selected"</if>>11%</option> 
+                  <option value="12"  <if condition="($info.apr_first eq 12)">selected="selected"</if>>12%</option> 
+                  <option value="13"  <if condition="($info.apr_first eq 13)">selected="selected"</if>>13%</option> 
+                  <option value="14"  <if condition="($info.apr_first eq 14)">selected="selected"</if>>14%</option> 
+                  <option value="15"  <if condition="($info.apr_first eq 15)">selected="selected"</if>>15%</option> 
+                  <option value="16"  <if condition="($info.apr_first eq 16)">selected="selected"</if>>16%</option> 
+                  <option value="17"  <if condition="($info.apr_first eq 17)">selected="selected"</if>>17%</option> 
+                  <option value="18"  <if condition="($info.apr_first eq 18)">selected="selected"</if>>18%</option> 
+                  <option value="19"  <if condition="($info.apr_first eq 19)">selected="selected"</if>>19%</option> 
+                  <option value="20"  <if condition="($info.apr_first eq 20)">selected="selected"</if>>20%</option> 
+                  <option value="21"  <if condition="($info.apr_first eq 21)">selected="selected"</if>>21%</option> 
+                  <option value="22"  <if condition="($info.apr_first eq 22)">selected="selected"</if>>22%</option> 
+                  <option value="23"  <if condition="($info.apr_first eq 23)">selected="selected"</if>>23%</option> 
+                  <option value="24"  <if condition="($info.apr_first eq 24)">selected="selected"</if>>24%</option> 
+                  <option value="25"  <if condition="($info.apr_first eq 25)">selected="selected"</if>>25%</option> 
+                </select>
+                <span>~</span>
+                <select name="apr_last" class="selectBox"> 
+                  <option value="5"  <if condition="($info.apr_last eq 5)">selected="selected"</if>>5%</option> 
+                  <option value="6"  <if condition="($info.apr_last eq 6)">selected="selected"</if>>6%</option> 
+                  <option value="7"  <if condition="($info.apr_last eq 7)">selected="selected"</if>>7%</option> 
+                  <option value="8"  <if condition="($info.apr_last eq 8)">selected="selected"</if>>8%</option> 
+                  <option value="9"  <if condition="($info.apr_last eq 9)">selected="selected"</if>>9%</option> 
+                  <option value="10" <if condition="($info.apr_last eq 10)">selected="selected"</if>>10%</option> 
+                  <option value="11" <if condition="($info.apr_last eq 11)">selected="selected"</if>>11%</option> 
+                  <option value="12" <if condition="($info.apr_last eq 12)">selected="selected"</if>>12%</option> 
+                  <option value="13" <if condition="($info.apr_last eq 13)">selected="selected"</if>>13%</option> 
+                  <option value="14" <if condition="($info.apr_last eq 14)">selected="selected"</if>>14%</option> 
+                  <option value="15" <if condition="($info.apr_last eq 15)">selected="selected"</if>>15%</option> 
+                  <option value="16" <if condition="($info.apr_last eq 16)">selected="selected"</if>>16%</option> 
+                  <option value="17" <if condition="($info.apr_last eq 17)">selected="selected"</if>>17%</option> 
+                  <option value="18" <if condition="($info.apr_last eq 18)">selected="selected"</if>>18%</option> 
+                  <option value="19" <if condition="($info.apr_last eq 19)">selected="selected"</if>>19%</option> 
+                  <option value="20" <if condition="($info.apr_last eq 20)">selected="selected"</if>>20%</option> 
+                  <option value="21" <if condition="($info.apr_last eq 21)">selected="selected"</if>>21%</option> 
+                  <option value="22" <if condition="($info.apr_last eq 22)">selected="selected"</if>>22%</option> 
+                  <option value="23" <if condition="($info.apr_last eq 23)">selected="selected"</if>>23%</option> 
+                  <option value="24" <if condition="($info.apr_last eq 24)">selected="selected"</if>>24%</option> 
+                  <option value="25" <if condition="($info.apr_last eq 25)">selected="selected"</if>>25%</option> 
+                </select>
+                <span class="pabright">（不选中则没有此项限制）</span>
+              </div>
+              <div class="row">
+                <span class="w120 tr">奖励选项：</span>
+                <input type="checkbox" name="award_status" class="vam" id="award_status" value="1" <if condition="($info.award_status eq 1)">checked="checked"</if> />
+                <span>奖励范围必须在  </span>
+                <select name="award_first" class="selectBox"> 
+                  <option  value="0"  <if condition="(info.$award_first eq 0)">selected="selected"</if>>0%</option> 
+                  <option value="0.1" <if condition="($info.award_first eq 0.1)">selected="selected"</if>>0.1%</option> 
+                  <option value="0.2" <if condition="($info.award_first eq 0.2)">selected="selected"</if>>0.2%</option> 
+                  <option value="0.3" <if condition="($info.award_first eq 0.3)">selected="selected"</if>>0.3%</option> 
+                  <option value="0.4" <if condition="($info.award_first eq 0.4)">selected="selected"</if>>0.4%</option> 
+                  <option value="0.5" <if condition="($info.award_first eq 0.5)">selected="selected"</if>>0.5%</option> 
+                  <option value="0.6" <if condition="($info.award_first eq 0.6)">selected="selected"</if>>0.6%</option> 
+                  <option value="0.7" <if condition="($info.award_first eq 0.7)">selected="selected"</if>>0.7%</option> 
+                  <option value="0.8" <if condition="($info.award_first eq 0.8)">selected="selected"</if>>0.8%</option> 
+                  <option value="0.9" <if condition="($info.award_first eq 0.9)">selected="selected"</if>>0.9%</option> 
+                  <option value="1"   <if condition="($info.award_first eq 1)">selected="selected"</if>>1%</option> 
+                  <option value="1.5" <if condition="($info.award_first eq 1.5)">selected="selected"</if>>1.5%</option> 
+                  <option value="2"   <if condition="($info.award_first eq 2)">selected="selected"</if>>2%</option> 
+                </select>
+                <span>~</span>
+                <select name="award_last" class="selectBox"> 
+                  <option value="0.1" <if condition="($info.award_last eq 0.1)">selected="selected"</if>>0.1%</option> 
+                  <option value="0.2" <if condition="($info.award_last eq 0.2)">selected="selected"</if>>0.2%</option> 
+                  <option value="0.3" <if condition="($info.award_last eq 0.3)">selected="selected"</if>>0.3%</option> 
+                  <option value="0.4" <if condition="($info.award_last eq 0.4)">selected="selected"</if>>0.4%</option> 
+                  <option value="0.5" <if condition="($info.award_last eq 0.5)">selected="selected"</if>>0.5%</option> 
+                  <option value="0.6" <if condition="($info.award_last eq 0.6)">selected="selected"</if>>0.6%</option> 
+                  <option value="0.7" <if condition="($info.award_last eq 0.7)">selected="selected"</if>>0.7%</option> 
+                  <option value="0.8" <if condition="($info.award_last eq 0.8)">selected="selected"</if>>0.8%</option> 
+                  <option value="0.9" <if condition="($info.award_last eq 0.9)">selected="selected"</if>>0.9%</option> 
+                  <option value="1"   <if condition="($info.award_last eq 1)">selected="selected"</if>>1%</option> 
+                  <option value="1.5" <if condition="($info.award_last eq 1.5)">selected="selected"</if>>1.5%</option> 
+                  <option value="2"   <if condition="($info.award_last eq 2)">selected="selected"</if>>2%</option> 
+                </select>
+                <span class="pabright">（不选中则没有此项限制）</span>
+              </div>
+              <div class="row">
+                <input name="id" type="hidden" value="{$info.id}" />
+                <input type="submit" name="" class="submitButton Button" value="保存" id=""/> 
+                <input type="reset" name=""  class="submitButton Button" value="重置" />
+              </div>
+              </form>
+            </div>
+            <!-- 修改规则 end-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 右侧内容栏end -->
+</div>
+</div>
+<!-- 用户中心中间 end -->
+
+<!-- footer -->
+	  <include file="Public:footer"/>
+<!--footer结束-->
+</body>
+</html>

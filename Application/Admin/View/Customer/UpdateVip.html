@@ -1,0 +1,51 @@
+<include file="Public/windowhead" />
+
+<form name="form1" id="ajaxForm" method="post" action="{:U(MODULE_NAME.'/Customer/UpdateVip')}" autocomplete="off">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content_wd">
+    <tr>
+      <td width="60" align="right">状态：</td>
+      <td>
+        <input type="radio" name="status" value="1" checked="checked" id="one" /><label for="one">审核通过</label>
+        <input type="radio" name="status" value="2" id="two" /><label for="two">审核不通过</label>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+        <input type="hidden" name="vipid" value="{$vipid}" />
+        <input type="hidden" name="customer_id" value="{$customer_id}" />
+        <!-- <input type="submit" class="btn" value="确认提交" /> -->
+        <input type="button" class="btn" id="sub" value="确认提交" />
+      </td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript">
+  $(function(){
+    var ajaxCallUrl = "{:U(MODULE_NAME.'/Customer/UpdateVip')}";
+    var index = parent.layer.getFrameIndex(window.name);    //当前弹窗层的索引
+    
+    $('#sub').on('click',function(){
+        //ajax提交
+        $.ajax({
+          type: 'POST',
+          async: false,
+          url:ajaxCallUrl,
+          data:$('#ajaxForm').serialize(),// 要提交的表单 
+          success: function(msg) {
+            //注意ajax提交后由父页面层被彻底关闭后执行的回调函数end刷新页面。 
+            if(msg.status == 1){
+              //提交成功
+          parent.layer.msg(msg.info,1,{type:9});
+          parent.layer.close(index);
+            }else{
+              //提交失败,则不关闭弹窗
+              parent.layer.msg(msg.info,1);
+              // parent.layer.close(index);
+            }
+          }
+        });
+    });
+  });
+</script>
+
+<include file="Public/commonfoot" />

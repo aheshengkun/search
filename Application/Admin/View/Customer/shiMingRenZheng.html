@@ -1,0 +1,196 @@
+<include file="Public/mainhead" />
+
+<script language="javascript" src="__PUBLIC__/admin/XY_Dialog/XY_Base.js"></script>
+<script language="javascript" src="__PUBLIC__/admin/XY_Dialog/XY_Dialog.js"></script>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/admin/artDialog/dialog-4.1.7.css" />
+<script language="javascript" src="__PUBLIC__/admin/artDialog/artDialog.js"></script>
+<script language="javascript" src="__PUBLIC__/admin/artDialog/iframeTools.js"></script>
+<!-- <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.imgrole.js"></script> -->
+
+<style type="text/css">
+	/*#roleimg{
+		display: block;clear: both;
+	}
+	.abtn{
+		display:inline-block;margin:6px 0 0 0;width:50px;height:25px;text-align:center;color:#fff;background:#ccc;border:1px solid #B6BEC5;border-radius:4px;cursor:pointer;
+	}
+	.leftrole{
+		float:left;position: relative;left: 0px;bottom:0;
+	}
+	.rightrole{
+		float:right;position: relative;right: 0px;bottom:0;
+	}*/
+</style>
+
+<script type="text/javascript">
+	function Mdysearch(status){
+		$("#sta").val(status);
+		search.submit();
+	}
+
+	/*看图片*/
+	// function mdyIMGbox(url,title){
+	// 	var img=new Image;
+	// 	img.onload=function(){
+	// 		var w=img.width;
+	// 		w=w>500?500:w;
+	// 		art.dialog({
+	// 			content:'<img alt="" id="roleimg" style="display:block;" src="'+url+'" width="'+w+'"><a href="###" class="abtn leftrole" onClick="leftRole();"> 左翻转 </a><a href="###" class="abtn rightrole" onClick="rightRole();"> 右翻转 </a>',
+	// 			lock:true,
+	// 			style:'succeed noClose',
+	// 			title:title
+	// 			// top:'15%'
+	// 			// fixed:true
+	// 		});
+	// 	}
+	// 	img.src=url;
+	// 	/*if(img.width<0){
+	// 	alert('图片不存在!');	
+	// 	return false;
+	// 	}*/
+	// 	return false;
+	// }
+
+
+	
+	// function imgBox(url,title,width,height){
+	// 	parent.$.layer({
+	// 	    type: 2,
+	// 	    title: title,
+	//         border : [6, 0.3, '#000'],
+	//         area: [width,height],
+	// 	    shade: [0.3, '#000'],
+	// 	    shadeClose: true,
+	// 	    moveType: 0,
+	// 	    closeBtn: [0, true], 
+	//      	iframe: {src : url},
+	//      	maxmin: true
+	// 	});
+	// }
+
+
+ //  	//图片左翻转
+ //  	function leftRole(){
+	// 	var img = $('#roleimg');
+	// 	img.rotate(-90);
+	// }
+	// //图片右翻转
+ //  	function rightRole(){
+	// 	var img = $('#roleimg');
+	// 	img.rotate(90);
+	// }
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">实名认证</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Customer/shiMingRenZheng')}">
+                       <div style="float:left;">
+						选择搜索条件：
+						<select name="searchoption" class="searchoption">
+							<option value="">请选择搜索条件</option>
+							<option value="name" <if condition="$search['searchoption'] eq 'name' ">selected="selected"</if> >用户名</option>
+							<option value="nicename" <if condition="$search['searchoption'] eq 'nicename' ">selected="selected"</if> >真实姓名</option>
+							<option value="phone" <if condition="$search['searchoption'] eq 'phone' ">selected="selected"</if> >手机号码</option>
+							<option value="email" <if condition="$search['searchoption'] eq 'email' ">selected="selected"</if> >电子邮箱</option>
+						</select>
+						<input type="text" name="searchvalue" class="input" value="{$search['searchvalue']}" />
+						<input name="examine" type="hidden" value="" id="sta">
+                        <input type="button" value="搜索" class="btn"  onclick="javascript:search.submit();" />
+                      </div>
+                      <div style="float:right;">
+						<input type="button" value="全部" class="mdyButton btn" onClick="javascript:Mdysearch('');" />
+						<input type="button" value="已通过" class="mdyButton btn" onClick="javascript:Mdysearch(1);" />
+						<input type="button" value="审核中" class="mdyButton btn" onClick="javascript:Mdysearch(2);" />
+						<input type="button" value="未通过" class="mdyButton btn" onClick="javascript:Mdysearch('-1');" />
+                      </div>
+                    </form>
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<input name="userid" type="hidden" value="{$cardArr.userid}">
+					<tr class="tr_title">
+                      <td width="*" class="main_td">用户名称</td>
+                      <td class="main_td">真实姓名</td>
+                      <td class="main_td">证件号码</td>
+                      <td class="main_td">电话</td>
+                      <td class="main_td">邮箱</td>
+                      <td class="main_td">证件图片</td>
+                      <td class="main_td">说明</td>
+                      <td class="main_td">状态</td>
+                      <td class="main_td">操作</td>
+					</tr>
+					<Volist name="userlist" id="item">
+					<tr class="tr_content tr_content{$item.id}">
+                      <td class="main_td1" align="center">{$item.name}</td>
+                      <td class="main_td1" align="center">{$item.nicename}</td>
+                      <td class="main_td1" align="center">{$item.card_id}</td>
+                      <td class="main_td1" align="center">{$item.phone}</td>
+                      <td class="main_td1" align="center">{$item.email}</td>
+                      <td class="main_td1" align="center">
+                        <!-- <neq name="item.card_pic1" value=""><a href="javascript:void(0)" onclick='mdyIMGbox("/{$item.card_pic1}","正面");'>正面 |</a><else />无 |</neq> 
+                        <neq name="item.card_pic2" value=""><a href="javascript:void(0)" onclick='mdyIMGbox("/{$item.card_pic2}","背面","{$item.id}");'>背面</a><else />无</neq> -->
+
+                        <neq name="item.card_pic1" value=""><a href="javascript:mdyDialog('{:U(MODULE_NAME."/Customer/imgBox",array("id"=>$item["id"],"type"=>"zm"))}','正面','510px','382px','1');">正面 |</a><else />无 |</neq> 
+                        <neq name="item.card_pic2" value=""><a href="javascript:mdyDialog('{:U(MODULE_NAME."/Customer/imgBox",array("id"=>$item["id"],"type"=>"bm"))}','背面','510px','382px','1');">背面</a><else />无</neq>
+                      </td>
+                      <td class="main_td1" align="center" width="15%">{$item.explain}</td>
+                      <td class="main_td1" align="center" >
+                        <switch name="item.examine">
+                            <case value="0"><font color="#FF0000">未申请</font></case>
+                            <case value="1"><font color="#009900">审核通过</font></case>
+                            <case value="2"><font color="#00ffff">正在审核</font></case>
+                            <case value="-1"><font color="#ff0000">审核未通过</font></case>
+                            <default />未知状态
+                        </switch>
+                      </td>
+                      <td class="main_td1" align="center" >
+                       <gt name="item.examine" value="1">
+                        <a href="javascript:void(0);" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/UpdateAudit",array("userid"=>$item["id"]))}','实名认证【{$item.name}】','380px','320px');">审核</a>
+                       <else />--</gt>
+                     </td>
+					</tr>
+					</Volist>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+                <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}
+                </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

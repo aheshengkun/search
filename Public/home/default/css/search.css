@@ -1,0 +1,160 @@
+.s_btn
+{
+width: 25%;
+height: 30px;
+line-height:30px;
+font-size:16px;
+color: white;
+background: #3385ff;
+border:none;
+max-width: 100px;
+}
+
+.s_ipt
+{
+width: 96%;
+height: 28px;
+font-size:16px;
+line-height: 28px;
+padding-left:10px;
+background: transparent;
+border: 0;
+outline: 0;
+-webkit-appearance: none;
+max-width: 539px;
+vertical-align:middle;
+}
+
+.s_ipt_tip
+{
+color: #aaa;
+z-index: -10;
+font: 16px/22px arial;
+height: 32px;
+line-height: 32px;
+padding-left: 7px;
+overflow: hidden;
+width: 100%;
+max-width: 539px;
+}
+
+.s_ipt_wr
+{
+border: 1px solid #b6b6b6;
+border-color: #7b7b7b #b6b6b6 #b6b6b6 #7b7b7b;
+background: #fff;
+display: inline-block;
+vertical-align: top;
+width: 70%;
+margin-right: -7px;
+border-right-width: 0;
+border-color: #b8b8b8 transparent #ccc #b8b8b8;
+overflow: hidden;
+max-width: 539px;
+}
+
+.c-container {
+width: 100%;
+font-size: 13px;
+word-wrap: break-word;
+word-break: break-all;
+}
+
+.result 
+{
+width: 100%;
+table-layout: fixed;
+}
+
+.t 
+{
+font-weight: normal;
+font-size: medium;
+margin-bottom: 1px;
+}
+
+.c-abstract
+{
+font-size: 13px;
+}
+
+.nums
+{
+	display:block;
+	color: rgb(153, 153, 153);
+	display: block;
+	font-family: arial;
+	font-size: 12px;
+	height: 30px;
+	line-height: 30px;
+}
+.loadmore
+{
+	color:#575757;
+	height: 40px;
+	line-height: 40px;
+	background-color: #D1D1D1;
+	text-align:center;
+	cursor:pointer;
+	width:80%;
+	margin:auto;
+	margin-left:auto;
+	margin-rigth:auto;
+	margin-bottom:10px;
+	display:block;
+	text-decoration: none;
+}
+.page
+{
+	margin:0px;
+	padding:0px;
+	list-style:none;
+}
+.page li
+{
+	float:left;
+	width:50%;
+}
+.page li a
+{
+	text-decoration:none;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	background-color: #3385ff;
+	color:#FFFFFF;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	width:90%;
+	font-size:20px;
+}
+.pagenum
+{
+	height:40px;
+	line-height:40px;
+	width:100%;
+	text-align:center;
+	color:#575757;
+	font-size:16px;
+	background-color: #D1D1D1;
+	margin-bottom:10px;
+}
+.mybody
+{
+	margin:0px;
+	padding:0px;
+}
+.logo
+{
+	color:#0066CC;
+	font-size:26px;
+	height:60px;
+	line-height:60px;
+}
+.content
+{
+	width:98%;
+	margin-left:auto;
+	margin-right:auto;
+}

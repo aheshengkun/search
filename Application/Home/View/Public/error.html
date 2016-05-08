@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='Refresh' content='{$waitSecond};URL={$jumpUrl}'>
+	<link rel="stylesheet" href="__PUBLIC__/home/default/css/common.css">
+  <title>操作有误</title>
+</head>
+<body>
+    <!--top、head、nav--> 
+    <include file="Public:head"/>
+    <!--head结束-->
+    <div class="main"> 
+        <div style="height:100px"></div>
+        <div class="boxCenterList" style="border:none;">
+        <div style="width:900px; float:none; margin:30px auto 30px auto;text-align:center">
+        <p style="font-size: 19px;color: #000; font-family:'Microsoft YaHei'">
+            {$error}
+        </p>
+        </br>
+        <div style=" font-size:18px">系统将在 <span style="color: blue; font-weight: bold" id="time">{$waitSecond}</span>秒后自动关闭，如果不想等待,直接点击<A id="href" href="{$jumpUrl}" style="font-size: 15px; color: blue;">这里</A> 关闭</div>
+        </div>
+        </div>
+        </div>
+        <div style="height:100px"></div>
+        <div class="clear"></div>
+        <script language="javascript">
+              (function(){
+              var wait = document.getElementById('time'),href = document.getElementById('href').href;
+              var interval = setInterval(function(){
+                  var time = --wait.innerHTML;
+                  if(time == 0) {
+                      location.href = href;
+                      clearInterval(interval);
+                  };
+              }, 1000);
+              })();
+            </script>
+    </div>
+    <!-- footer -->
+        <include file="Public:footer"/>
+    <!-- footer end -->
+</body>
+</html>

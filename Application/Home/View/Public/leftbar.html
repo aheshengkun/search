@@ -1,0 +1,19 @@
+<div class="leftMenu fl">
+	<ul>
+		<div class="SiteNav">
+			<p>网站导航</p>
+			<p>Site navigation</p>
+		</div>
+		<foreach name="leftMenu" item="val">
+			<if condition="$val['linkurl'] neq ''">
+				<li><a href="{:U($val['linkurl'])}" <if condition='$val[term_id] eq "$post_tid"'>class="subhover"</if> >{$val.name}</a></li>
+			<else/>
+				<if condition="$val['term_id'] eq 9">
+					<li><a href="{:U('NewContent/index',array('id'=>$val['term_id'],'pid'=>0))}" <if condition='$val[term_id] eq "$post_tid"'>class="subhover"</if> >{$val.name}</a></li>
+				<else/>
+					<li><a href="{:U('NewList/index',array('tid'=>$val['term_id'],'pid'=>0))}" <if condition='$val[term_id] eq "$post_tid"'>class="subhover"</if> >{$val.name}</a></li>
+				</if>
+			</if>
+		</foreach>
+	</ul>
+</div>

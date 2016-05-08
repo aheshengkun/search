@@ -1,0 +1,12 @@
+[ 2015-08-25T10:31:51+08:00 ] 127.0.0.1 /searchsys/NewList/index/
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_links' doesn't exist
+
+[ 2015-08-25T10:39:59+08:00 ] 127.0.0.1 /searchsys/NewList/index/
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_usermeta' doesn't exist
+
+[ 2015-08-25T10:41:39+08:00 ] 127.0.0.1 /searchsys/NewList/index/
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_posts_view' doesn't exist
+
+[ 2015-08-25T10:41:41+08:00 ] 127.0.0.1 /searchsys/NewList/index/
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'searchsys.sc_posts_view' doesn't exist
+

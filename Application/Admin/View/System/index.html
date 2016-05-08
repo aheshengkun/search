@@ -1,0 +1,110 @@
+<include file="Public/mainhead" />
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+			<tr>
+				<td height="50">
+				<div class="titlebt">{$configdata[0]['type']}</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" colspan="4">
+                  <div style="float: left; margin: 15px 0 5px 0;padding-bottom:5px;">
+                    <input type="button" value="添加系统参数" class="btn" onClick="mdyDialog('{:U(MODULE_NAME."/System/Add")}','添加系统参数','420px','380px');" />
+                  </div>
+                </td>
+			</tr>
+			<tr>
+				<td colspan="4">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<form method="post" action="{:U(MODULE_NAME.'/System/save')}" id="submitForm">
+                    <input type="hidden" name="list" id="list" value="">
+					<tr class="tr_title">
+						<td width="25%">参数说明</td>
+						<td width="55%">参数值</td>
+						<td width="15%">键名</td>
+                        <td width="5%">操作</td>
+					</tr>
+					<iterate name="configdata" id="v">
+					<tr class="tr_content">
+						<td class="td_right">{$v.name}:</td>
+						<td class="td_left">
+                          <switch name="v.style">
+                              <case value="string"><input type="text" name="{$v.nid}" value="{$v.value}" style="margin:0 6px;width:97%;" class="input"></case>
+                              <case value="text"><textarea name="{$v.nid}" style="margin:0 6px;width:97%;height:80px;">{$v.value|stripslashes=###}</textarea></case>
+                              <case value="bool">
+                              <input type="radio" name="{$v.nid}" value="1" <eq name="v.value" value="1">checked="checked"</eq> /> 是
+                              <input type="radio" name="{$v.nid}" value="0" <eq name="v.value" value="0">checked="checked"</eq> /> 否
+                              </case>
+                              <default />
+                              <input  name="{$v.nid}" value="{$v.value|br2nl=###}" size="15">
+                          </switch>
+    
+                        </td>
+						<td>{$v.nid}</td>
+                        <td>
+                        <eq name="v.status" value="1">
+                          <a href="javascript:void(0)" onClick="mdyDialog('{:U("Admin/System/Edit",array("id"=>$v["id"]))}','修改：{$v.name}','420px','380px');">修改</a>
+                        <else />--</eq>
+                        </td>
+					</tr>
+					</iterate>
+					<tr>
+						<td colspan="4" align="center">
+							<input name="typeneme" type="hidden"  value="{$configdata[0]['type']}">
+                            <input type="button" name="btn" class="btn"  value="提交配置" onClick="conFirmSubmit('#submitForm','确定修改数据？');" />
+						</td>
+					</tr>
+					</form>
+				</table>
+					<script language="javascript">
+                    function getlist(){
+                        var gn=document.getElementsByTagName('input');
+                        var ei=document.getElementById('list');
+                        for(i=0;i<gn.length;i++){
+                            if(/^con_/.test(gn.item(i).name)){
+                                if(ei.value==''){
+                                    ei.value=gn.item(i).name;
+                                }else{
+                                    ei.value=ei.value+','+gn.item(i).name;
+                                }
+                            }
+                        }
+                        gn=document.getElementsByTagName('textarea');
+                        for(i=0;i<gn.length;i++){
+                            if(/^con_/.test(gn.item(i).name)){
+                                if(ei.value==''){
+                                    ei.value=gn.item(i).name;
+                                }else{
+                                    ei.value=ei.value+','+gn.item(i).name;
+                                }
+                            }
+                        }
+                    }
+                    getlist();
+                    </script>
+				</td>
+			</tr>
+			<tr><td height="40"></td></tr>
+			<tr>
+				<td class="left_txt">
+					<img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}</td>
+			</tr>
+
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

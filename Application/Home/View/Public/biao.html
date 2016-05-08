@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>发布借款标-{$webname}</title>
+		<link rel="stylesheet" href="__PUBLIC__/home/default/css/common.css">
+		<style>
+			.spanL{margin-left:60px;min-width:200px;display:inline-block;}
+			.tl{font-size:20px;color:green;margin-left:50px;}
+		</style>
+	</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:head"/>
+	<!-- /头部 -->
+	<div class="mainBoxWrap">
+		<div class="mainBox webAuto clearfix">
+			<div class="webAuto clearfix">
+				<!-- 左侧列表 -->
+				<include file="Borrow:left" />
+				<div class="rightContent fl">
+					<div class="title"><if condition="$Think.get.stp == '1'">发布借款标<else/>等待满标</if></div>
+					<div class="ArticleContent">
+						<if condition="$_SESSION['UserName']">
+							<if condition="$borrowInfo">
+							<?php if($_GET['stp'] == 1){?>
+								<p class="tl">尊敬的用户！您好，您于<?php echo date('Y年m月d日',$borrowInfo['addtime']);?>申请的借款标信息如下：</p><br/>
+								<p><span class="spanL">发布的标名：<?php echo $borrowInfo['name']?></span><span class="spanL">借款金额：￥<?php echo $borrowInfo['account']?></span><span class="spanL">投标限额：￥<?php echo $borrowInfo['lowest_account']?></span></p>
+								<p>
+									<span class="spanL">奖励方式：<?php if($borrowInfo['award'] == 0){echo '无';}elseif($borrowInfo['award'] == 1){echo '按金额奖励';}else{echo '按比例奖励';}?></span>
+									<span class="spanL">奖励额度：<?php if($borrowInfo['award'] == 0){echo '无';}elseif($borrowInfo['award'] == 1){echo $borrowInfo.part_account.'元';}else{echo $borrowInfo['funds'].'%';}?></span>
+									<span class="spanL">奖励条件：<?php if($borrowInfo['$borrowInfo.is_false'] == 1){echo '投标失败也奖励';}else{echo '投标且成功复审通过后才有奖励';}?></span>
+								</p>
+								<p>
+									<span class="spanL">还款方式：<?php if($borrowInfo['isday']=1 || $borrowInfo['borrow_type']==5){echo '到期全额还款';}else{if($borrowInfo['style'] == 0){echo '按月分期还款';}elseif($borrowInfo['style']==2){echo '到期还本息';}elseif($borrowInfo['style']==3){echo '按月付息到期还本';}}?></span>
+									<span class="spanL">月利率：{$borrowInfo['apr']}%</span>
+									<span class="spanL">借款期限：<?php if($borrowInfo['borrow_type'] == 5){echo '额满即还';}elseif($borrowInfo['isday'] == 1){echo $borrowInfo['time_limit_day'].'天';}else{echo $borrowInfo['time_limit'].'月';}?></span>
+								</p>
+							<?php }else{?>
+									<p class="tl">尊敬的用户！您<?php echo date('Y年m月d日',$borrowInfo['addtime']);?>申请的借款标借款进度如下：</p>
+									<div class="SuccessBid">
+										<div class="content">
+											<ul>
+												<li>
+													<div class="row">
+														<h3 onclick="window.location.href='<?php echo '__ROOT__/invest/invest?id='.$borrowInfo[id];?>'" style="cursor:pointer"><?php echo $borrowInfo['name'];?></h3>
+														<?php if($borrowInfo['borrow_type'] == 1){?>
+															<i class="icon-i1"><img src="__PUBLIC__/Images/home/guangfacaifu/lei_03.jpg"></i>
+														<?php }?>
+														<?php if($borrowInfo['borrow_type'] == 2){?>
+															<i class="icon-i1"><img src="__PUBLIC__/Images/home/guangfacaifu/lei_05.jpg"></i>
+														<?php }?>
+														<?php if($borrowInfo['borrow_type'] == 3){?>
+															<i class="icon-i1"><img src="__PUBLIC__/Images/home/guangfacaifu/lei_07.jpg"></i>
+														<?php }?>
+														<?php if($borrowInfo['borrow_type'] == 4){?>
+															<i class="icon-i1"><img src="__PUBLIC__/Images/home/guangfacaifu/lei_09.jpg"></i>
+														<?php }?>
+														<?php if($borrowInfo['borrow_type'] == 5){?>
+															<i class="icon-i1"><img src="__PUBLIC__/Images/home/guangfacaifu/lei_11.jpg"></i>
+														<?php }?>
+													    <?php if($borrowInfo['award'] == 1 or $borrowInfo['award'] == 2){?>
+															<i class="icon-i4">奖</i><!--奖-->
+														<?php }?>
+														<?php if($borrowInfo['isday'] == 1){?>
+															<i class="icon-i3">天</i><!--天-->
+														<?php }?>
+														<?php if($borrowInfo['is_mb'] == 1){?>
+															<i class="icon-i5">秒-</i><!--秒-->
+														<?php }?>
+													</div>
+													<div class="row">
+														<span class="attrs">借款金额：<span class="red">￥<?php echo $borrowInfo['account'];?></span></span>
+														<span class="attrs">借款期限：<span class="red">
+																额满即还
+														</span></span>
+														<span class="attrs">还款方式：<span class="red">
+																	到期全额还款
+														</span></span>
+														<span class="attrs">信用等级：<i><img src="__APP__/data/images/credit/<?php echo $credit_pic;?>"  height="16"/></i></span>
+														<span class="attrs">借款进度：
+															<span class="progress">
+																<i class="progress-end" style="width:<?php echo $borrowInfo['account_yes']/$borrowInfo['account']*100;?>;%"></i>
+															</span>
+															<span class="red"><?php echo $borrowInfo['account_yes']/$borrowInfo['account']*100;?>%</span>
+														</span>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+			
+							<?php }?>
+							<else/>
+								<p style="height:300px;line-heigh:300px;text-align:center;font-size:18px">温馨提示：<span style="color:red;">未找到相关数据！</span></p>
+							</if>
+						<else/>
+							<p style="height:300px;line-heigh:300px;text-align:center;font-size:18px">温馨提示：<span style="color:red;">请登录后再进行查询！</span></p>
+						</if>
+					</div>
+				</div>
+				<!-- end -->
+			</div>
+		</div>
+		<!-- mainBox end -->
+	</div>
+	<!-- 底部 -->
+	<include file="Public:footer"/>
+	<!-- /底部 -->
+</body>
+</html>

@@ -1,0 +1,39 @@
+[ 2015-08-26T11:47:08+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T11:47:16+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T12:04:29+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T12:35:46+08:00 ] 127.0.0.1 /searchsys/Admin/SearchSphinx/Index.html
+ERR: 无法加载控制器:SearchSphinx
+
+[ 2015-08-26T12:36:03+08:00 ] 127.0.0.1 /searchsys/Admin/SearchSphinx/Index.html
+ERR: 无法加载控制器:SearchSphinx
+
+[ 2015-08-26T12:36:58+08:00 ] 127.0.0.1 /searchsys/Admin/SearchSphinx/Index.html
+ERR: 无法加载控制器:SearchSphinx
+
+[ 2015-08-26T13:52:42+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T13:54:32+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T13:56:43+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T14:07:13+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T14:07:24+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T14:08:19+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+
+[ 2015-08-26T14:08:21+08:00 ] 127.0.0.1 /searchsys/Admin/undefined
+ERR: 无法加载控制器:Undefined
+

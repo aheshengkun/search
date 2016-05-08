@@ -1,0 +1,27 @@
+<include file="Public:head"/>
+<!-- /头部 -->
+		<!-- headerWrap end -->
+		<div class="mainBox webAuto clearfix">
+			<!--left bar-->
+				<include file="Public:leftbar" />
+				<!---left bar结束-->
+			<div class="rightContent fl">
+				<div class="title">{$content.post_title}</div>
+				<div class="ArticleContent">
+					<p>{$content.post_content}</p>
+					<if condition='$content["post_type"] neq "page"'>
+					<div class="list_page">
+						<span class="right_page">上一篇：{$next_page}</span>
+						<span class="left_page">下一篇：{$prev_page}</span>
+					</div>
+					</if>
+				</div>
+			</div>
+			<!-- itemAttr end -->
+		</div>
+		<!-- mainBox end -->
+		<!-- 底部 -->
+		<include file="Public:footer"/>
+		<!-- /底部 -->
+	</body>
+</html>

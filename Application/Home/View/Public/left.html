@@ -1,0 +1,58 @@
+<div class="left">
+			<div class="ConnectionBox w230">
+				<!-- 我的账号 -->
+				<div class="title clearfix">
+					<h2 class="h2title">我的账号</h2>
+				</div>
+				<div class="Publicont clearfix">
+					<ul>
+					  <li><a href="{:U('Ucenter/user_account?stp=0')}#member_left" <if condition="(ACTION_NAME eq 'user_account') and ($stp eq 0) ">class="current"<else /></if>>资金详情</a></li>
+					  <li><a href="{:U('Ucenter/user_account?stp=2')}#member_left" <if condition="(ACTION_NAME eq 'user_account') and ($stp eq 2) ">class="current"<else /></if>>账户充值</a></li>
+					  <li><a href="{:U('Ucenter/user_account?stp=4')}#member_left" <if condition="(ACTION_NAME eq 'user_account') and ($stp eq 4) ">class="current"<else /></if>>账户提现</a></li>
+					  <li><a href="{:U('Ucenter/aut_manage?stp=0')}#member_left" <if condition="(ACTION_NAME eq 'aut_manage') and ($stp eq 0) ">class="current"<else /></if>>认证中心</a></li>
+					  <li><a href="{:U('Ucenter/apply_vip')}#member_left" <if condition="(ACTION_NAME eq 'apply_vip')">class="current"<else /></if>>VIP申请</a></li>
+					</ul>
+				</div>
+				<!-- 我的账号 end -->
+				<!-- 投资详情 -->
+				<div class="title clearfix">
+					<h2 class="h2title">投资详情</h2>
+				</div>
+				<div class="Publicont clearfix">
+					<ul>
+					  <li><a href="{:U('Invest/index')}#member_left">我要投标</a></li>
+					  <li><a href="{:U('Ucenter/user_invest')}#member_left" <if condition="(ACTION_NAME eq 'user_invest')">class="current"<else /></if>>我的投标</a></li>
+					  <li><a href="{:U('Ucenter/user_toub')}#member_left" <if condition="(ACTION_NAME eq 'user_toub')">class="current"<else /></if>>自动投标</a></li>
+					</ul>
+				</div>
+				<!-- 投资详情 end -->
+				<!-- 借款详情 -->
+				<div class="title clearfix">
+					<h2 class="h2title">借款详情</h2>
+				</div>
+				<div class="Publicont clearfix">
+					<ul>
+					  <li><a href="{:U('Borrow/index')}">我要借款</a></li>
+					  <li><a href="{:U('Ucenter/user_loan?stp=0')}#member_left" <if condition="(ACTION_NAME eq 'user_loan') and ($stp eq 0)">class="current"<else /></if>>我的借款</a></li>
+					  <li><a href="{:U('Ucenter/user_loan?stp=6')}#member_left" <if condition="(ACTION_NAME eq 'user_loan') and ($stp eq 6)">class="current"<else /></if>>额度申请</a></li>
+					  <li><a href="{:U('Ucenter/user_loan?stp=5')}#member_left" <if condition="(ACTION_NAME eq 'user_loan') and ($stp eq 5)">class="current"<else /></if>>投资者回复</a></li>
+					</ul>
+				</div>
+				<!-- 借款详情 end -->
+				<!-- 个人信息 -->
+				<div class="title clearfix">
+					<h2 class="h2title">个人信息</h2>
+				</div>
+				<div class="Publicont clearfix">
+					<ul>
+					  <li><a href="{:U('Ucenter/user_info')}#member_left" <if condition="(ACTION_NAME eq 'user_info')">class="current"<else /></if>>修改个人资料</a></li>
+					  <li><a href="{:U('Ucenter/aut_manage?stp=5')}#member_left" <if condition="(ACTION_NAME eq 'aut_manage') and ($stp eq 5)">class="current"<else /></if>>更换头像</a></li>
+					  <li><a href="{:U('Ucenter/security?stp=0')}#member_left" <if condition="(ACTION_NAME eq 'security') and ($stp eq 0)">class="current"<else /></if>>修改登录密码</a></li>
+					  <li><a href="{:U('Ucenter/security?stp=1')}#member_left" <if condition="(ACTION_NAME eq 'security') and ($stp eq 1)"><else /></if>>修改交易密码</a></li>
+					  <li><a href="{:U('Ucenter/letter')}#member_left" <if condition="(ACTION_NAME eq 'letter')">class="current"<else /></if>>站内信</a></li>
+					  <li><a href="{:U('Ucenter/friends?stp=2')}#member_left" <if condition="(ACTION_NAME eq 'friends') and ($stp eq 2)">class="current"<else /></if>>我的好友ACTION_NAME</a></li>
+					</ul>
+				</div>
+				<!-- 个人信息 end -->
+			</div>
+		</div>

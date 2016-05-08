@@ -1,0 +1,33 @@
+<include file="Public:header" />
+<body>
+    <include file="Public:navtop" />
+    <!-- 内页MainBox -->
+	<div class="MainBox">
+		<div class="sitePosition">
+			<span>当前位置：</span>
+            <a href="{:U('/')}">首页</a>
+			<span>></span>
+            <!--获取分配过来的数组长度-1，判断是否为最后一个-->
+            <php>$last = count($parent)-1;</php>
+            <foreach name='parent' item='v'>
+            <if condition="$parent[0]['is_page'] neq 1">
+            	<span>></span>
+        	</if>
+            <a href="{:U('/category/'.$v['term_id'],array('pid'=>$v['term_id']))}">{$v.name}</a> <if condition='$key neq $last'><span>></span></if>
+            </foreach>
+            <span>></span> {$content.post_title}
+		</div>
+		<div class="itemList newListPage clearfix">
+			<include file="Public:nav" />
+			<div class="PageContent fl">
+				<div class="title">
+					<h2>{$content.post_title}</h2>
+				</div>
+				<div class="Content">
+					{$content.post_content}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end -->
+	<include file="Public:footer" />

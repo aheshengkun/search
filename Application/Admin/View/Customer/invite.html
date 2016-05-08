@@ -1,0 +1,86 @@
+<include file="Public/mainhead" />
+
+<script type="text/javascript">
+  function Mdysearch(status){
+	  $("#real_status").val(status);
+	  search.submit();
+  }
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+			<tr>
+				<td height="31">
+				  <div class="titlebt">推广提成</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/User/Invite')}" style="margin-bottom:2px;">
+                        <input name="real_status" type="hidden" value="" id="real_status">
+                        <input type="button" value="全部" class="btn" onClick="javascript:Mdysearch('');" />
+                        <input type="button" value="未发" class="btn" onClick="javascript:Mdysearch(0);" />
+                        <input type="button" value="已发" class="btn" onClick="javascript:Mdysearch(1);" />
+                    </form>
+                  </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<tr class="tr_title">
+						<td width="">ID</td>
+						<td width="">用户名</td>
+						<td width="">推广人</td>
+                        <td width="">推广提成</td>
+						<td width="">发放状态</td>
+					</tr>
+					<iterate name="InviteData" id="v">
+					<tr class="tr_content">
+						<td>{$v.user_id}</td>
+						<td>{$v.username}</td>
+                        <td>{$v.invite_name}</td>
+						<td>{$v.invite_money}</td>
+						<td><eq name="v.real_status" value="1">已发<else />未发</eq></td>
+					</tr>
+					</iterate>
+				</table>
+				</form>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+                <!--<a href="__URL__/Invite?xls=down&{$down}" class="downxls"></a>-->
+                <input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/Invite?xls=down&{$down}'" />
+                </td>
+			</tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt"><img
+					src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

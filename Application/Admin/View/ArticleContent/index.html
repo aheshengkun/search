@@ -1,0 +1,197 @@
+<include file="Public/mainhead" />
+
+<script type="text/javascript" >  
+	$(document).ready(function() {  
+	    $(".stripe tr").mouseover(function() {
+            $(this).addClass("over");  
+        }).mouseout(function() {  
+            $(this).removeClass("over");  
+        });
+	})
+
+	function Mdysearch(status){
+		$("#sta").val(status);
+		search.submit();
+	}
+
+	//多选框处理，全选、反选、全不选
+	var checkall=document.getElementsByName("ids[]");
+	//全选
+	function select(){
+		for(var i=0; i<checkall.length; i++){
+			checkall[i].checked=true;
+		}
+	}
+	//反选
+	function fanselect(){
+		for(var i=0; i<checkall.length; i++){
+			if(checkall[i].checked){
+				checkall[i].checked=false;
+			}else{
+				checkall[i].checked=true;
+			}
+		}
+	}
+	//全不选
+	function noselect(){
+		for(var i=0; i<checkall.length; i++){
+			checkall[i].checked=false;
+		}
+	}
+</script>  
+
+<style type="text/css">
+	a.abtn{
+		display: inline-block;
+		height: 25px;
+		line-height: 25px;
+		border: 1px solid #357ebd;
+		border-radius: 4px;
+		padding: 2px;
+		text-align: center;
+		vertical-align: middle;
+		background-color: #428bca;
+		color: #fff;
+	}
+	.stripe tr{
+		background: #fff;
+	}
+	.stripe tr.over td {  
+	    background:#E8ECF0;  /*这个将是鼠标高亮行的背景色*/  
+	}
+	
+</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">所有文章</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="get" id="search" name="search" action="{:U(MODULE_NAME.'/ArticleContent/index')}">
+	                   	<div style="float:left;">
+	                        文章标题：
+	                        <input type="text" name="post_title" id="searchword" value="{$condition['post_title']}" class="input" />
+	                        所属分类：
+	                        <select name="post_tid" id="post_tid" class="searchoption">
+	                          <option value="0">====请选择====</option>
+	                          {$type.pidOption}
+	                        </select>
+	                        <script>$("#post_tid option[value='{$condition.post_tid}']").attr("selected","selected");</script>
+	                        &nbsp;&nbsp;文章类型：
+	                        <select name="post_type" id="post_type" class="searchoption">
+	                          <option value="">==请选择==</option>
+	                          <option value="post">非单页</option>
+	                          <option value="page">单页</option>
+	                        </select>
+	                        <script>$("#post_type option[value='{$condition.post_type}']").attr("selected","selected");</script>
+	                        <input name="post_status" type="hidden" value="" id="sta" />
+	                        <input type="button" class="btn" value="搜索"  onclick="javascript:search.submit();" />
+	                    </div>
+                    
+		                <div style="float:right;">
+		                	<input type="button" value="所有文章" class="mdyButton btn" onClick="javascript:Mdysearch('');" />
+		                	<input type="button" value="已发表" class="mdyButton btn" onClick="javascript:Mdysearch('publish');" />
+		                	<input type="button" value="草稿" class="mdyButton btn" onClick="javascript:Mdysearch('draft');" />
+		                </div>
+	                </form>
+                </div>
+				</td>
+			</tr>
+			<form action="{:U(MODULE_NAME.'/ArticleContent/articleHandle')}" method="post" id="form">
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content stripe">
+					<tr class="tr_title">
+					  <td width="4%">选择</td>
+                      <td width="6%">ID</td>
+                      <td width="6%">排序</td>
+                      <td width="6%">发表者</td>
+                      <td width="35%">文章标题</td>
+                      <td width="7%">所属分类</td>
+                      <td width="6%">文章类型</td>
+                      <td width="6%">文章状态</td>
+                      <!-- <td width="4%">评论状态</td> -->
+                      <td width="12%">发表时间</td>
+                      <!-- <td >评论数</td> -->
+                      <td width="8%">操作</td>
+					</tr>
+					<Volist name="list" id="item">
+					<tr class="tr_content tr_content{$item.id}">
+					  <td class="main_td1" align="center"><input type="checkbox" name="ids[]" value="{$item.id}" /></td>
+					  <td class="main_td1" align="center">{$item.id}</td>
+					  <td class="main_td1" align="center" ><input type="text" size="4" name="{$item.id}" value="{$item.menu_order}"></td>
+                      <td class="main_td1" align="center">{$item.author}</td>
+                      <td class="main_td1" align="center"><a href="{:U('/NewContent/index',array('id'=>$item['id']))}" title="{$item.post_title}" target="_blank">{$item.post_title|str_cut="25"}</a><if condition="$item['top'] eq 1"><span class="top">置顶</span></if></td>
+                      <td class="main_td1" align="center">{$item.tname}</td>
+                      <td class="main_td1" align="center" >
+                        <switch name="item.post_type">
+                            <case value="post">非单页</case>
+                            <case value="page"><span class="red">单页</span></case>
+                        </switch>
+                      </td>
+                      <td class="main_td1" align="center" >
+                         <switch name="item.post_status">
+                            <case value="publish">已发表</case>
+                            <default /><span class="red">草稿</span>
+                        </switch>
+                      </td>
+                      <!-- <td class="main_td1" align="center" >
+                      	<switch name="item.comment_status">
+                            <case value="open">允许</case>
+                            <default /><span class="red">不允许</span>
+                        </switch>
+                      </td> -->
+                      <td class="main_td1" align="center" >{$item.post_date|date='Y-m-d H:i',###}</td>
+                      <!-- <td class="main_td1" align="center" >{$item.comment_count}</td> -->
+                       	<td>
+                           	<a href="{:U(MODULE_NAME.'/ArticleContent/updateArticle',array('id'=>$item['id']))}">修改</a> /
+                          	<a href="javascript:void(0);" onClick="conFirm('{:U(MODULE_NAME."/ArticleContent/delArticle",array("id"=>$item["id"]))}','确定要删除吗?删除后将不可恢复');">删除</a>
+                      	</td>
+					</tr>
+					</Volist>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="10"></td>
+			</tr>
+			<tr>
+				<td colspan="10" align="left">
+					<a href="javascript:select()" class="abtn">全选</a> <a href="javascript:fanselect()" class="abtn">反选</a> <a href="javascript:noselect()" class="abtn">全不选</a>&nbsp;&nbsp;
+					<input type="hidden" name="delChecks" value="删除所选">
+					<input type="button" onClick="conFirmSubmit('#form','确定删除选中的文章吗，删除后不可恢复！');" class="btn" value="删除所选" />
+					<input type="submit" class="btn" value="排序" />
+					<if condition="$page"><div class="page">{$page}</div></if>
+				</td>
+			</tr>
+			</form>
+			<tr>
+				<td height="20"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+                <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}
+                </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

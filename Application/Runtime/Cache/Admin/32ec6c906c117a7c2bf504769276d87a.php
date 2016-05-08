@@ -1,0 +1,62 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台登陆</title>
+<link type="text/css" rel="stylesheet" href="/searchsys/Public/admin/css/style.css" />
+<script type="text/javascript" src="/searchsys/Public/admin/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/searchsys/Public/admin/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/searchsys/Public/admin/js/jquery.form.js"></script>
+<!--[if IE 6]><script src="/searchsys/Public/admin/js/png.js"  type="text/javascript" ></script>
+<script type="text/javascript">
+		DD_belatedPNG.fix(' .login_box ');
+</script>
+<![endif]-->
+<script language="JavaScript">
+function fleshVerify(){
+	//重载验证码
+	var timenow = new Date().getTime();
+	document.getElementById('verifyImg').src= '<?php echo U("Login/verify","","");?>'+'/'+timenow;
+}
+$().ready(function() {
+ 	$("#signupForm").validate();
+});
+jQuery.extend(jQuery.validator.messages, {
+  required: ""
+});
+</script>
+<style>
+  body {
+    background:#02609b;
+  }
+  html{
+    background:#02609b ;
+  }
+  .login_box  {width:511px;height:243px;margin:170px auto 0 auto;background:url(/searchsys/Public/admin/images/admin_logo_bg.png) no-repeat;color:#FFF;
+  }
+</style>
+</head>
+<body id="loginbg" >
+<form method='post' name="loginForm" id="signupForm"  action="<?php echo U(MODULE_NAME.'/Login/checkLogin');?>" >
+<div class="login_box">
+  <div class="login_title">后台管理</div>
+  <div class="login_right">
+    <div class="login_form">
+      <ul>
+        <li><label>帐&nbsp;&nbsp; 号:</label><input type="text" id="admin_account" class="input-text required" name="admin_account" size="16">
+            <span id="admin_account_div" style=" color:red; margin-top:3px; padding-left:px; font-size:13px; display:none" ></span>	
+        </li>
+        <li><label>密&nbsp;&nbsp; 码:</label><input type="password"  class="input-text required" name="admin_password"  id="admin_password" size="16">
+            <span id="admin_password_div" style=" color:red; margin-top:3px; padding-left:px; font-size:13px; display:none"></span>	
+        </li>
+        <li><label>验证码:</label><input name="verify" class="input-text required"  class="inputbox" id="verify"  size="6" value="" maxlength="4"/>
+          <img id="verifyImg" src="<?php echo U(MODULE_NAME.'/Login/verify');?>" align="absbottom" onClick="fleshVerify()" style="cursor:pointer;"/>
+        </li>
+        <li><label></label><input type="submit" value="登录" class="button"><input type="reset" name="reset" value="重置" class="button" id="reset" /></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</form>
+</body>
+</html>

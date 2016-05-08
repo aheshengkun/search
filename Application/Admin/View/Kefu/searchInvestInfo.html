@@ -1,0 +1,112 @@
+<include file="Public/mainhead" />
+<script language="javascript" src="__PUBLIC__/admin/timepicker/WdatePicker.js"></script>
+
+<script type="text/javascript">
+  $(function(){
+    $('#sub').click(function(){
+      var dotime1 = $('#dotime1').val();
+      var dotime2 = $('#dotime2').val();
+      var d1   =   (new Date(Date.parse(dotime1.replace(/-/g,   "/")))).getTime();
+      var d2   =   (new Date(Date.parse(dotime2.replace(/-/g,   "/")))).getTime();
+      if(d1 > d2){
+        // layer.msg('投资时间选取前一项不能大于后一项');
+        parent:parent.$.layer({
+          shade: [0.3, '#000'],
+          area: ['auto','auto'],
+          shadeClose: true,       //点击对话框外部即关闭
+          dialog: {
+            msg: '投资时间选取前一项不能大于后一项',
+            btns: 1,                    
+            type: 8,
+            btn: ['确定'],
+            no: function(){
+
+            }
+          }
+        });
+        return false;
+      }
+      return true;
+    });
+  })
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+    <table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="31">
+        <div class="titlebt">专属客服({$kefuname})-用户投资统计</div>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#F7F8F9">
+    <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td valign="top" class="td_top">
+          <div>
+            <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Kefu/searchInvestInfo')}" autocomplete="off">
+              <div style="float:left;">
+              投资时间：<input type="text" name="dotime1" id="dotime1" value="{$search.dotime1}" class="input" onClick="WdatePicker()"/> 
+              到 <input type="text" name="dotime2" value="{$search.dotime2}" id="dotime2" class="input" onClick="WdatePicker()"/>
+
+              <!-- <input name="status" type="hidden" value="" id="sta" /> -->
+              <input name="user_id" type="hidden" value="{$user_id}" />
+              <input name="pg" type="hidden" value="{$pg}" />
+              <input name="name" type="hidden" value="{$kefuname}" />
+              <input type="submit" value="搜索" class="btn" id="sub" style="cursor:pointer;" />
+            </div>
+            <div style="float:right;">
+              <a href="{:U(MODULE_NAME.'/Kefu/kefuByCustomer',array('user_id'=>$user_id,'name'=>$kefuname,'p'=>$pg))}" class="btn" style="color:#fff;">返回上一级</a>
+            </div>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+          <tr class="tr_title">
+            <td width="" class="main_td">专属用户总数(含未投资用户)</td>
+            <td width="*" class="main_td">总投资额</td>
+            <td width="*" class="main_td">搜索<if condition="$search['dotime1'] neq '' && $search['dotime2'] eq ''">{$search['dotime1']}之后<elseif condition="$search['dotime1'] eq '' && $search['dotime2'] neq ''" />{$search['dotime2']}之前<elseif condition="$search['dotime1'] neq '' && $search['dotime2'] neq ''" />{$search['dotime1']} 到 {$search['dotime2']}<elseif condition="$search['dotime1'] eq '' && $search['dotime2'] eq ''" />所有</if>时间段<b>投资用户数</b></td>
+            <td width="*" class="main_td">搜索<if condition="$search['dotime1'] neq '' && $search['dotime2'] eq ''">{$search['dotime1']}之后<elseif condition="$search['dotime1'] eq '' && $search['dotime2'] neq ''" />{$search['dotime2']}之前<elseif condition="$search['dotime1'] neq '' && $search['dotime2'] neq ''" />{$search['dotime1']} 到 {$search['dotime2']}<elseif condition="$search['dotime1'] eq '' && $search['dotime2'] eq ''" />所有</if>时间段<b>投资额</b></td> 
+          </tr>
+
+          <tr class="tr_content">
+            <td class="main_td1" align="center"><strong style="color:red;"><if condition="$total eq ''">0<else />{$total}</if></strong>人</td>
+            <td class="main_td1" align="center"><strong style="color:red;"><if condition="$totalmoney eq ''">0<else />{$totalmoney}</if></strong>元</td>
+            <td class="main_td1" align="center"><strong style="color:red;"><if condition="$searchtotal eq ''">0<else />{$searchtotal}</if></strong>人</td>
+            <td class="main_td1" align="center"><strong style="color:red;"><if condition="$searchmoney eq ''">0<else />{$searchmoney}</if></strong>元</td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+      <!-- <tr>
+        <td height="20">
+        </td>
+      </tr> -->
+      <!-- <tr>
+        <td height="20">
+          <input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/down?{$down}'" /></td>
+      </tr> -->
+      <tr>
+        <td height="40"></td>
+      </tr>
+      <tr>
+        <td class="left_txt">
+        <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+        客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+        <img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+        官方网站：{$Think.config.sysconfig.website}</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<include file="Public/commonfoot" />

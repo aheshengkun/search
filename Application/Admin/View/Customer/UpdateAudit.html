@@ -1,0 +1,83 @@
+<include file="Public/windowhead" />
+
+<style type="text/css">
+  #explain{
+    width: 270px;
+    height: 80px;
+    overflow: auto;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+  }
+
+</style>
+
+<form name="form1" id="ajaxForm" method="post" action="{:U(MODULE_NAME.'/Customer/UpdateAudit')}" autocomplete="off">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="content_wd">
+    <tr>
+        <td width="60" align="right">状态：</td>
+        <td>
+          <input type="radio" name="status" value="1" checked="checked" id="one" /><label for="one">审核通过</label>
+          <input type="radio" name="status" value="-1" id="two" /><label for="two">审核不通过</label>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">说明：</td>
+        <td><textarea name="explain" id="explain"></textarea></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>
+        <span class="red" style="font-size:13px;">注意：审核不通过时必须填写说明,只需说明具体原因。如照片不清晰、证件号码有误等等具体的原因。</span>
+      </td>
+    </tr>
+    <tr>
+        <td align="center" colspan="2">
+          <input type="hidden" name="userid" value="{$user_id}" />
+          <!-- <input type="submit" name="reset" class="btn" value="确认提交" /> -->
+          <input type="button" class="btn" id="sub" value="确认提交" />
+        </td>
+    </tr>
+  </table>
+</form>
+
+<script type="text/javascript">
+  $(function(){
+    var ajaxCallUrl = "{:U(MODULE_NAME.'/Customer/UpdateAudit')}";
+    var index = parent.layer.getFrameIndex(window.name);    //当前弹窗层的索引
+    
+    $('#sub').on('click',function(){
+      var status = $('input:radio[name="status"]:checked').val();      //获取到页面name=status的对象中被选中的值
+      var explain = $('#explain');
+      if(status == -1){        //选择了不通过审核
+        if(explain.val() == ''){
+          parent.layer.msg('审核不通过必须填写说明');
+          explain.focus();
+          return false;
+        }
+      }
+
+      //ajax提交
+      $.ajax({
+        type: 'POST',
+        async: false,
+        url:ajaxCallUrl,
+        data:$('#ajaxForm').serialize(),// 要提交的表单 
+        success: function(msg) {
+          //注意ajax提交后由父页面层被彻底关闭后执行的回调函数end刷新页面。 
+          if(msg.status == 1){
+            //提交成功
+          parent.layer.msg(msg.info,1,{type:9});
+          parent.layer.close(index);
+          }else{
+            //提交失败,则不关闭弹窗
+            parent.layer.msg(msg.info,1);
+            // parent.layer.close(index);
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<include file="Public/commonfoot" />

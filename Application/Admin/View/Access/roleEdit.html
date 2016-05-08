@@ -1,0 +1,112 @@
+<include file="Public/mainhead" />
+
+<script language="javascript">
+	function selectAll(){
+		$("#list input[type='checkbox']").attr("checked",true);
+	}
+
+	function clearAll(){
+		$("#list input[type='checkbox']").attr("checked",false);
+	}
+
+	$(document).ready(function(){
+		$('.model').click(function(){
+			id = "void"+$(this).val();
+			if($(this).attr("checked")){
+				$("#"+id+" input[type='checkbox']").attr("checked",true);
+			}else{
+				$("#"+id+" input[type='checkbox']").attr("checked",false);
+			}
+		});	
+
+		$('.void').click(function(){
+			id = $(this).parent().attr('id');
+			id = id.replace("void","model");
+			model = $("#"+id);
+			if(!model.attr("checked")){
+				model.attr("checked",true);
+			}
+		});	
+		
+	});
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">编辑角色</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top"></td>
+			</tr>
+			<tr>
+				<td>
+				<form method="post" id="list" action="{:U(MODULE_NAME.'/Access/update')}">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content_fm">
+					<tr>
+						<td class="edit_left">用户组名：</td>
+						<td class="edit_right"><input type="hidden" name="id" id="id"
+							value="{$data.id}"> <input type="text" name="name"
+							id="name" value="{$data.name}" class="edit_input"></td>
+					</tr>
+					<tr>
+						<td class="edit_left">所属组：</td>
+
+						<td class="edit_right">
+						<div class="edit_select">
+							<select name="pid" class="searchoption">
+								<option value="0">无</option>
+								<iterate name="roledata" id="v">
+								<eq name="data['pid']" value="$v['id']">
+								<option value="{$v.id}" selected>{$v.name}</option>
+								<else />
+								<option value="{$v.id}">{$v.name}</option>
+								</eq>
+								</iterate>
+							</select>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="edit_left">状态：</td>
+						<td class="edit_right">
+							<if condition="$data.status eq 1">
+								<input type="radio" name="status" value="1" checked="checked">启用
+								<input type="radio" name="status" value="0">禁用
+							<elseif condition="$data.status eq 0" />
+								<input type="radio" name="status" value="1">启用
+								<input type="radio" name="status" value="0" checked="checked">禁用
+							<else/>
+								<input type="radio" name="status" value="1">启用 
+								<input type="radio" name="status" value="0">禁用
+							</if>
+						</td>
+					</tr>
+						<td colspan="2">
+						<a href="javascript:list.submit();" id="submit" class="operation_submit" style="margin-left: 430px; margin-top: 30px;"></a>
+						</td>
+					</tr>
+				</table>
+				</form>
+				</td>
+			</tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

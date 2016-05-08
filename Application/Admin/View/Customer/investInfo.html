@@ -1,0 +1,132 @@
+<include file="Public/mainhead" />
+<script language="javascript" src="__PUBLIC__/admin/timepicker/WdatePicker.js"></script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">用户<if condition="$years neq '' && $months neq ''">{$years}年{$months}月份</if>投资列表</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Customer/queryInvite')}">
+                     <div style="float:left;">
+                     	<label>用户名：
+                     		<input type="text" class="input" name="name" value="{$seach.name}">
+                     	</label>
+                        <label>选择投资年月：
+							<input type="text" name="dotime1" id="years" value="{$seach.dotime1}" class="input" onClick="WdatePicker({dateFmt:'yyyy-M'})"/>
+						</label>
+                        <input type="submit" class="btn" value="搜索" />
+                      </div>
+                    </form>
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<if condition="$total neq 0 || $borrowtotal neq 0">
+					<tr class="tr_title">
+					  <td class="main_td">标ID</td>
+                      <td width="*" class="main_td">投标人</td>
+                      <td class="main_td">标类型</td>
+                      <td class="main_td">借款标题</td>
+                      <td class="main_td">投资金额</td>
+                      <!-- <td class="main_td">投资份数</td> -->
+                      <td class="main_td">利率</td>
+                      <td class="main_td">借款期限</td>
+                      <td class="main_td">预期收益</td>
+                      <td class="main_td">投资时间</td>
+                      <td class="main_td">到期时间</td>
+                      <td class="main_td">还款状态</td>
+                      <!-- <td class="main_td">投资卡状态</td> -->
+					</tr>
+					<Volist name="info" id="item">
+					<tr class="tr_content tr_content{$item.id}">
+					  <td class="main_td1" align="center" >{$item.borrow_id}</td>
+                      <td class="main_td1" align="center"><a href="javascript:void(0)">{$item.name}</a></td>
+                      <td class="main_td1" align="center" >
+                      	<switch name="item.borrow_type">
+	                      	<case value="1"><span class="green">流转标</span></case>
+	                      	<case value="2">给力标(月)</case>
+	                      	<case value="3"><span class="red">秒标</span></case>
+	                      	<case value="4">给力标(天)</case>
+	                      	<case value="5">净值标</case>
+	                      	<case value="6">信用标</case>
+	                      	<case value="7">抵押标</case>
+	                      	<case value="8">分期金融</case>
+                      	</switch>
+                      </td>
+                      <td class="main_td1" align="center" >{$item.title}</td>                      
+                      <td class="main_td1" align="center" >{$item.money}元</td>
+                      <!-- <td class="main_td1" align="center" >{$item.tzafew}</td> -->
+                      <td class="main_td1" align="center" >{$item.apr}</td>
+                      <td class="main_td1" align="center" >{$item.time_limit}<eq name="item.borrow_type" value="4"> 天<else /> 个月</eq></td>
+                      <td class="main_td1" align="center" >{$item.interest}元</td>
+                      <td class="main_td1" align="center" >{$item.tbtime|date="Y-m-d H:i:s",###}</td>
+                      <td class="main_td1" align="center" >{$item.end_time|date="Y-m-d H:i:s",###}</td>
+                      <td class="main_td1" align="center" >
+                      	<switch name="item.repay_status">
+                            <case value="0"><span class="red">未还</span></case>
+                            <case value="1"><span class="green">已还</span></case>
+                        </switch>
+                      </td>
+                      <!-- <td class="main_td1" align="center" >
+                         <switch name="item.cardstate">
+                            <case value="0">未发卡</case>
+                            <case value="1">邮寄途中</case>
+                            <case value="2">已收到</case>
+                            <default />未收到
+                        </switch>
+                      </td> -->
+					</tr>
+					</Volist>
+					<tr>
+			            <td colspan="6"><span class="total"><if condition="$years neq '' && $months neq ''">{$years}年{$months}月</if>总共投资：<strong style="color:red;">{$total}</strong>个标</span></td>
+			            <td colspan="7"><span class="total"><if condition="$years neq '' && $months neq ''">{$years}年{$months}月</if>总投资额：<strong style="color:red;">{$borrowtotal}</strong>元</span></td>
+			        </tr>
+					<else />
+					<tr class="tr_content tr_content">
+						<td>暂无数据</td>
+					</tr>
+					</if>
+				</table>
+				</td>
+			</tr>
+		    <tr>
+		        <td height="20">
+		        <div class="page">{$page}</div>
+		        </td>
+		    </tr>
+		    <tr>
+		        <td height="20">
+		        <input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/downLoanList?{$down}'" /></td>
+		    </tr>
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+                <img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}
+                </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

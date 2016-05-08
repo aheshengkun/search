@@ -1,0 +1,107 @@
+<include file="Public/mainhead" />
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="31">
+				<div class="titlebt">用户({$search.name})的推荐人列表</div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="top" class="td_top">
+                  <div>
+                    <form method="post" id="search" name="search" action="{:U(MODULE_NAME.'/Customer/recommend')}" autocomplete="off" >
+                     <div style="float:left;">
+                        选择搜索条件：<select name="searchoption" class="searchoption">
+							<option value="">请选择搜索条件</option>
+							<option value="name" <if condition="$search['searchoption'] eq 'name' ">selected="selected"</if> >用户名</option>
+							<option value="nicename" <if condition="$search['searchoption'] eq 'nicename' ">selected="selected"</if> >真实姓名</option>
+							<option value="phone" <if condition="$search['searchoption'] eq 'phone' ">selected="selected"</if> >手机号码</option>
+							<option value="email" <if condition="$search['searchoption'] eq 'email' ">selected="selected"</if> >电子邮箱</option>
+						</select>
+						<input type="text" name="searchvalue" class="input" value="{$search['searchvalue']}" />
+						<!-- <input name="status" type="hidden" value="" id="sta" /> -->
+						<input type="hidden" name="id" value="{$search['id']}" />
+						<input type="hidden" name="p" value="{$search['p']}" />
+                        <input type="submit" value="搜索" class="btn" />
+                      </div>
+                      <div style="float:right;">
+                      	<a href="{:U(MODULE_NAME.'/Customer/index',array('p'=>$search['pg']))}" class="btn" style="color:#fff;">返回上一级</a>
+						<!-- <input type="button" value="全部" class="mdyButton btn" onClick="javascript:Mdysearch('');" />
+						<input type="button" value="启用" class="mdyButton btn" onClick="javascript:Mdysearch(1);" />
+						<input type="button" value="禁用" class="mdyButton btn" onClick="javascript:Mdysearch(0);" />
+                        <input type="button" value="添加用户" class="btn" onClick="javascript:window.location.href='{:U(MODULE_NAME.'/Customer/addUser')}'"/> -->
+                      </div>
+                    </form>
+                </div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="content">
+					<tr class="tr_title">
+                        <td width="" class="main_td">ID</td>
+                        <td width="*" class="main_td">用户名</td>
+                        <td width="*" class="main_td">真实姓名</td>
+                        <td width="*" class="main_td">邮箱</td>
+                        <td width="*" class="main_td">手机</td>
+                        <td width="*" class="main_td">所在地</td>
+                        <td width="*" class="main_td">证件号码</td>
+                        <td width="" class="main_td">添加时间</td>
+                        <td width="" class="main_td">账号类型</td>
+                        <td width="" class="main_td">状态</td>
+                        <td width="" class="main_td">操作</td>
+					</tr>
+					<foreach name="list" item="item">
+                      <tr class="tr_content">
+                          <td class="main_td1" align="center">{$item.id}</td>
+                          <td class="main_td1" align="center"><a href="{:U(MODULE_NAME.'/Customer/recommend',array('id'=>$item['id'],'name'=>$item['name']))}" title="查看所有推荐人">{$item.name}</a></td>
+                          <td class="main_td1" align="center">{$item.nicename}</td>
+                          <td class="main_td1" align="center">{$item.email}</td>
+                          <td class="main_td1" align="center">{$item.phone}</td>
+                          <td class="main_td1" align="center">{$item.area}</td>
+                          <td class="main_td1" align="center">{$item.card_id}</td>
+                          <td class="main_td1" align="center">{$item.reg_time|date="Y-m-d H:i:s",###}</td>
+                           <td class="main_td1" align="center"><switch name="item.type" ><case value="0">未知状态</case><case value="1">正式账号</case><case value="2">测试账号</case></switch></td>
+                          <td class="main_td1" align="center"><eq name="item.status" value="1">启用<else /><span class="red">禁用</span></eq></td>
+                          <td class="main_td1" align="center">
+                            <a href="{:U(MODULE_NAME."/Customer/userEdit?user_id=$item[id]")}">修改</a>/
+                            <a href="javascript:void(0)" onClick="mdyDialog('{:U(MODULE_NAME."/Customer/userinfo",array("id"=>$item["id"]))}','【{$item.name}】的详细信息','520px','580px','1');">查看详细信息</a>
+                          </td>
+                      </tr>
+					</foreach>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="20">
+				<div class="page">{$page}</div>
+				</td>
+			</tr>
+			<!-- <tr>
+				<td height="20"><input name="xls" type="button" value="下载XLS" class="btn" onClick="javascript:window.location.href='__URL__/down?{$down}'" /></td>
+			</tr> -->
+			<tr>
+				<td height="40"></td>
+			</tr>
+			<tr>
+				<td class="left_txt">
+				<img src="__PUBLIC__/admin/images/icon-mail2.gif" width="16" height="11">
+				客户服务邮箱：{$Think.config.sysconfig.services_email}<br>
+				<img src="__PUBLIC__/admin/images/icon-phone.gif" width="17" height="14">
+				官方网站：{$Think.config.sysconfig.website}</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<include file="Public/commonfoot" />

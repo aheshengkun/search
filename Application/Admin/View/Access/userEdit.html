@@ -1,0 +1,257 @@
+<include file="Public/mainhead" />
+
+<style type="text/css">
+  .module_border {
+    /*border-bottom: 1px solid #CCCCCC;*/
+    height: 30px;
+    line-height: 27px;
+    text-align: left;
+    width: 100%;
+  }
+  .module_border .l {
+    float: left;
+    padding: 4px 5px 0 0;
+    text-align: right;
+    width: 130px;
+  }
+  .module_border .c {
+    float: left;
+    padding: 4px 5px 3px 10px;
+  }
+  .main_right {
+    padding: 5px 2px 0 5px;
+    width: 82%;
+  }
+  .module_border .w {
+    float: left;
+    padding: 4px 5px 0 0;
+    text-align: right;
+    width: 200px;
+  }
+  .module_submit {
+    /*border-bottom: 1px solid #CCCCCC;*/
+    padding:0px 0px 6px 0px;
+    text-align: center;
+  }
+  .module_submit input{
+  	cursor:pointer;
+  }
+</style>
+
+<form name="form_user" method="post" action="{:U(MODULE_NAME.'/Access/userEdit')}" onSubmit="return check_form();" autocomplete="off" >
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+    <td valign="top">
+      <table width="100%" height="31" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="31"><div class="titlebt">编辑用户</div></td>
+          </tr>
+      </table>
+    </td>
+	</tr>
+	<tr>
+		<td valign="top" bgcolor="#F7F8F9">
+      <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+              <td class="td_top" style="padding-left:20px;">
+                <table width="70%" border="0" cellpadding="0" cellspacing="0" class="content_fm">
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">用户名：</div>
+                            <div class="c">
+                              <input name="username" type="text"  value="{$user.account}" class="input_w" />
+                              <font color="#FF0000">*</font>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">登录密码：</div>
+                            <div class="c">
+                              <input name="password" type="password" class="input_w"  /><font color="#FF0000">*不填则保留原密码</font>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">确认密码：</div>
+                            <div class="c">
+                              <input name="password1" type="password" class="input_w" /><font color="#FF0000">*不填则保留原密码</font>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">中文名：</div>
+                            <div class="c">
+                              <input name="nickname" type="text" class="input_w"  value="{$user.nickname}"/>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">所属角色： </div>
+                            <div class="c">
+                            <select name="role_id" class="searchoption">{$role.pidOption}</select>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                            <div class="l">状态：</div>
+                            <div class="c">
+                              <if condition="$user.status eq 1">
+                                <input name="status" type="radio" value="1" checked='checked'/>开通
+                                <input name="status" type="radio" value="0"  />关闭
+							                 <else/>
+                                <input name="status" type="radio" value="1" />开通
+                                <input name="status" type="radio" value="0" checked='checked' />关闭
+							               </if>
+                            </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="module_border">
+                          <div class="l">&nbsp;</div>
+                          <div class="c">
+                         		<input type="hidden" name="id" value='{$id}'/>
+                            <input type="submit" class="btn" value="确认提交" />
+                            <input type="reset"  class="btn" name="reset" value="重置表单" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                </table>
+              </td>
+          </tr>
+          <tr>
+              <td height="40"></td>
+          </tr>
+      </table>
+		</td>
+	</tr>
+ </table>
+</form>
+<script type="text/javascript">
+function check_form(){
+  var username  = $("input[name='username']");
+  var password  = $("input[name='password']");
+  var password1 = $("input[name='password1']");
+  //用于错误提示信息
+  var errorMsg = '';
+
+  //用户名检查
+  if(username.val().length < 4 || username.val().length > 15){
+    errorMsg += '用户名长度在4到15个字符之间<br />';
+  }else if(isChinaOrNumbOrLett(username.val()) == false){
+    errorMsg += '用户名由汉字、字母、数字、下划线组成<br />';
+  }
+
+  //密码检查
+  if(password.val().length <= 4){
+    errorMsg += '密码过于简单,必须大于4位<br />';
+  }else if(password.val() != password1.val()){
+    errorMsg += '确认密码不相符<br />';
+  }
+
+  if(errorMsg.length > 0){
+    parent:parent.$.layer({
+      shade: [0.3, '#000'],
+      area: ['auto','auto'],
+      shadeClose: true,       //点击对话框外部即关闭
+      dialog: {
+        msg: errorMsg,
+        btns: 1,                    
+        type: 8,
+        btn: ['确定'],
+        no: function(){
+
+        }
+      }
+    });
+    return false;
+  }else{  
+    return true;
+  }
+}
+
+function isChinaOrNumbOrLett(s){ //判断是否是汉字、字母、数字组成 
+  var regu = "^[0-9a-zA-Z\_\u4e00-\u9fa5]+$";
+  var re = new RegExp(regu);
+  if (re.test(s)){
+    return true;
+  }else{
+    return false;
+  } 
+} 
+
+// function check_form(){
+// 	 var frm = document.forms['form_user'];
+// 	 var username  = frm.elements['username'].value;
+// 	 var password  = frm.elements['password'].value;
+// 	 var password1 = frm.elements['password1'].value;
+// 	 // var email     = frm.elements['email'].value;
+	 
+// 	 var errorMsg = '';
+// 	 //用户名检查
+// 	 if (username.length == 0) {
+// 		errorMsg += '用户名必须填写' + '\n';
+// 	 }else if(username.length > 15 || username.length < 4){
+// 		 errorMsg += '用户名长度在4到15个字符之间'+ '\n';
+// 	 }else if(isChinaOrNumbOrLett(username) == false){
+// 		 errorMsg += '用户名由汉字、字母、数字、下划线组成 '+ '\n';
+// 	 }
+// 	 //密码检查
+// 	 if(password.length == 0){
+// 		 errorMsg += '密码必须填写' + '\n';
+// 	 }else if(password.length < 4){
+// 		 errorMsg += '密码过于简单' + '\n';
+// 	 }else if(password != password1){
+// 		 errorMsg += '确认密码不相符' + '\n';
+// 	 }
+// 	 //邮箱检查
+// 	 // if (email.length == 0 ) {
+// 		// errorMsg += '邮箱必须填写' + '\n';
+// 	 // }else if(isEmail(email) == false){
+// 		//  errorMsg += '请检查邮箱格式' + '\n';
+// 	 // }
+	  
+// 	 if (errorMsg.length > 0){
+// 	   alert(errorMsg); return false;
+// 	 } else{  
+// 	   return true;
+// 	 }
+// }
+
+// // function isEmail(str){ 
+// //   var myReg = /^[-_A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+// //   if(myReg.test(str)) return true; 
+// //   return false; 
+// // }
+
+
+// function isChinaOrNumbOrLett(s){ //判断是否是汉字、字母、数字组成 
+//   var regu = "^[0-9a-zA-Z\_\u4e00-\u9fa5]+$";
+//   var re = new RegExp(regu);
+//   if (re.test(s)){
+//     return true;
+//   }else{
+//     return false;
+//   } 
+// } 
+</script>
+
+<include file="Public/commonfoot" />

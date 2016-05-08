@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <script src="/Public/home/default/js/jquery-1.8.3.min.js"></script>
+  <title>错误提示</title>
+  <script language="javascript">
+    $(function(){
+      var wait = document.getElementById('time');
+      var href = document.getElementById('href').href;
+      var interval = setInterval(function(){
+        var time = --wait.innerHTML;
+        if(time == 0) {
+          location.href = href;
+          clearInterval(interval);
+        }
+      },1000);
+    });
+  </script>
+</head>
+<body>
+  <div style="width:600px;margin:150px auto;border:1px solid #ccc;padding:50px 0 50px 0;">
+    <p style="font-size: 19px;font-family:'Microsoft YaHei';text-align:center;margin:0;padding:0 0 20px 0;">
+      <?php echo $e['message'];?>
+    </p>
+    <div style="font-size:18px;text-align:center;margin:0 auto;">系统将在 <span style="color: blue; font-weight: bold" id="time">3</span> 秒后自动关闭，如果不想等待,直接点击<a id="href" href="/" style="font-size: 15px; color: blue;">返回首页</a></div>
+  </div>
+</body>
+</html>

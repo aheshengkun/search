@@ -1,0 +1,98 @@
+<link href="__PUBLIC__/admin/css/skin.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="__PUBLIC__/admin/js/jquery-1.8.3.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <body style="background:#FFF;">
+        <div class="wrap">
+            <div class="mainBody">
+            <form action="{:U(MODULE_NAME.'/Access/accessEdit')}" method="post">
+                <div id="Right">
+                    <div class="Item hr">
+                        <div class="titlebt">权限分配</div>
+                    </div>
+                    <p>你正在为用户组：<b>{$info.name}</b> 分配权限 。</p>                    
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab">
+                            <volist name="node" id="level1">
+                                <tr>
+                                    <td style="font-size: 14px;">
+	                                    <label>
+	                                    <input name="access[]" level="1" type="checkbox" obj="node_{$level1.id}" value='{$level1.id}_1'
+	                                    <if condition='$level1["access"]'>checked='checked'</if>/> 
+		                                    <b>[应用]</b>
+		                                    {$level1.title}
+	                                    </label>
+                                    </td>
+                                </tr>
+                                <volist name="level1['child']" id="level2">
+                                    <tr>
+                                        <td style="padding-left: 30px; font-size: 14px;">
+                                        <label>
+                                        <input name="access[]" level="2" type="checkbox" obj="node_{$level1.id}_{$level2.id}" value='{$level2.id}_2'
+                                        <if condition='$level2["access"]'>checked='checked'</if>/> 
+                                        <b>[控制器]</b> 
+                                        {$level2.title}
+                                        </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 50px;">
+                                            <volist name="level2['child']" id="level3">
+                                                <label>
+                                                <input name="access[]" level="3" type="checkbox" obj="node_{$level1.id}_{$level2.id}_{$level3.id}" value='{$level3.id}_3'
+                                                <if condition='$level3["access"]'>checked='checked'</if>/> 
+                                                {$level3.title}
+                                                </label>&nbsp;&nbsp;&nbsp;
+                                            </volist>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </volist>
+                        </table>
+                        <input type="hidden" name="id" value="{$info.id}"/>
+                    
+                    <div class="commonBtnArea" >
+                   		<input type="hidden" name="rid" value='{$rid}'/>
+                   		<input type="submit" class="btn" style="margin:30px 0 30px 430px;" value="提交数据"/>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <script type="text/javascript">
+            $(function(){
+                //为项目时候全选本项目所有操作
+                $("input[level='1']").click(function(){
+                    var obj=$(this).attr("obj")+"_";
+                    $("input[obj^='"+obj+"']").prop("checked",$(this).prop("checked"));
+                });
+                //为模块时候全选本模块所有操作
+                $("input[level='2']").click(function(){
+                    var obj=$(this).attr("obj")+"_";
+                    $("input[obj^='"+obj+"']").prop("checked",$(this).prop("checked"));
+                    //分隔obj为数组
+                    var tem=obj.split("_");
+                    //将当前模块父级选中
+                    if($(this).prop('checked')){
+                        $("input[obj='node_"+tem[1]+"']").prop("checked","checked");
+                    }
+                });
+                //为操作时只要有勾选就选中所属模块和所属项目
+                $("input[level='3']").click(function(){
+                    var tem=$(this).attr("obj").split("_");
+                    if($(this).prop('checked')){
+                        //所属项目
+                        $("input[obj='node_"+tem[1]+"']").prop("checked","checked");
+                        //所属模块
+                        $("input[obj='node_"+tem[1]+"_"+tem[2]+"']").prop("checked","checked");
+                    }
+                });
+                //清空当前已经选中的
+                $(".empty").click(function(){
+                    $("input[type='checkbox']").prop("checked",false);
+                });
+                $(".submit").click(function(){
+                    commonAjaxSubmit();
+                });
+            });
+        </script>
+    </body>
